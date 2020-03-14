@@ -4,7 +4,7 @@ import 'package:personal_website/routes/route_handlers.dart';
 
 void configureRoutes(Router router, List<RouteModel> routeHandlers) {
   routeHandlers.forEach((routeHandler) {
-    if (routeHandler.path == '/404') {
+    if (routeHandler.path == '404') {
       router.notFoundHandler = routeHandler.handler;
     } else {
       router.define(routeHandler.path, handler: routeHandler.handler);
