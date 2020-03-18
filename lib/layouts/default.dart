@@ -6,7 +6,7 @@ class DefaultLayout extends StatelessWidget {
     Key key, this.appBar, this.body
   }) : super(key: key);
 
-  final AppBar appBar;
+  final Widget appBar;
   final Widget body;
 
   @override

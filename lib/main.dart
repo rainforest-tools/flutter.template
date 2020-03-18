@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     final routesNotifier = Provider.of<Routes>(context);
-    // routesNotifier.configure();
 
     return MaterialApp(
       title: 'Rainforest',
