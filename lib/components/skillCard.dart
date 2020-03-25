@@ -12,6 +12,7 @@ class SkillCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
       Icon(
         skill.icon,

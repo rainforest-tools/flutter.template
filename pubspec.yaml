@@ -31,6 +31,8 @@ dependencies:
   provider: ^4.0.4
   # Router for flutter
   fluro: ^1.6.1
+  # RWD
+  
 
 dev_dependencies:
   flutter_test:

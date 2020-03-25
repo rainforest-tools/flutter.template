@@ -38,6 +38,6 @@ final skills = <Skill>[
   new Skill(
     icon: FontAwesomeIcons.unity,
     skillName: 'Unity',
-    description: '在衛武資訊實習時正式用 Swift 進行 iPad App 開發，近期正在看 SwiftUI 的內容。'
+    description: '熟悉基本 Unity 介面及相關官方套件操作，目前正在學習 Shader 攥寫及官方 Shader Graph、Cinemachine、Post Processing...'
   )
 ];

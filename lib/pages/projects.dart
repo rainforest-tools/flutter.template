@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_website/components/settingsForm.dart';
-import 'package:personal_website/components/timeline.dart';
 import 'package:personal_website/layouts/default.dart';
-import 'package:personal_website/models/event.dart';
 import 'package:personal_website/routes/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -29,15 +27,14 @@ class ProjectsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(child: ListView(
-        children: [
-          TimelineItem(event: events[1]),
-          Text('hkhsdkf'),
-          Text('hkhsdkf'),
-          Text('hkhsdkf'),
-          Text('hkhsdkf'),
-        ]
-      ))
+      body: Center(child: Text(
+        'Comming soooon...', 
+        style: DefaultTextStyle.of(context).style.apply(
+          fontSizeFactor: 2,
+          color: Colors.tealAccent,
+          decoration: TextDecoration.none
+        )
+      ),)
     );
   }
 }

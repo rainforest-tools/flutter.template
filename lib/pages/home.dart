@@ -6,6 +6,8 @@ import 'package:personal_website/components/timeline.dart';
 import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/event.dart';
 import 'package:personal_website/models/skill.dart';
+import 'package:personal_website/responsive.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -18,7 +20,9 @@ class HomePage extends StatelessWidget {
                 icon: const Icon(Icons.settings),
                 tooltip: 'Settings',
                 onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => SettingsForm()))),
+                  MaterialPageRoute(builder: (_) => SettingsForm())
+                )
+            ),
           ],
         ),
         body: CustomScrollView(
@@ -28,6 +32,7 @@ class HomePage extends StatelessWidget {
             SliverToBoxAdapter(
               child: Container(
                   height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,26 +51,39 @@ class HomePage extends StatelessWidget {
                         Flexible(
                           child: Transform.translate(
                             offset: Offset(-100, 0),
-                            child: RichText(
-                                text: TextSpan(
-                                    text: '鄭羽霖',
-                                    style: DefaultTextStyle.of(context)
-                                        .style
-                                        .apply(
-                                            fontSizeFactor: 2.0,
-                                            color: Colors.tealAccent,
-                                            decoration: TextDecoration.none),
-                                    children: <TextSpan>[
-                                  TextSpan(
-                                    text: '\n研究生＠台大土木電腦輔助工程組、\n前前端及 iOS 工程師＠魏武資訊',
-                                    style: DefaultTextStyle.of(context)
-                                        .style
-                                        .apply(
-                                            fontSizeFactor: 0.5,
-                                            color: Colors.white70,
-                                            decoration: TextDecoration.none),
-                                  )
-                                ])),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  '鄭羽霖', 
+                                  style: DefaultTextStyle.of(context).style.apply(
+                                    fontSizeFactor: 2.0,
+                                    color: Colors.tealAccent,
+                                    decoration: TextDecoration.none
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  child: Text(
+                                    '研究生＠台大土木電腦輔助工程組',
+                                    style: DefaultTextStyle.of(context).style.apply(
+                                      fontSizeFactor: 0.4,
+                                      color: Colors.white60,
+                                      decoration: TextDecoration.none
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '熱衷學習、使用各種前端框架開發，質感、美感偏執，希望能參與各種酷炫視覺效果、良好 UI/UX 之應用開發。',
+                                  style: DefaultTextStyle.of(context).style.apply(
+                                    fontSizeFactor: 0.5,
+                                    color: Colors.white70,
+                                    decoration: TextDecoration.none
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ])),
@@ -109,9 +127,9 @@ class HomePage extends StatelessWidget {
                   childCount: skills.length,
                 ), 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 30.0,
-                  crossAxisSpacing: 30.0,
+                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 3, 4),
+                  mainAxisSpacing: 30,
+                  crossAxisSpacing: 30,
                 )
               ),
             )
