@@ -32,11 +32,14 @@ class TimelineItem extends StatelessWidget {
     child: Column(
       children: <Widget>[
         ListTile(
-          title: Text(
-            event.title, 
-            style: DefaultTextStyle.of(context).style.apply(
-              fontSizeFactor: 1.5,
-              color: Colors.tealAccent
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              event.title, 
+              style: DefaultTextStyle.of(context).style.apply(
+                fontSizeFactor: 1.5,
+                color: Colors.tealAccent
+              ),
             ),
           ),
           subtitle: Text(
