@@ -31,6 +31,7 @@ class TimelineItem extends StatelessWidget {
     padding: const EdgeInsets.only(right: 30),
     child: Column(
       children: <Widget>[
+        Text(event.timestamp.toString()),
         ListTile(
           title: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
