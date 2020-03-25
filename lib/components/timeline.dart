@@ -12,9 +12,10 @@ class Timeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     events.sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return ListView.builder(
+    return new ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: events.length,
+      itemExtent: 300,
       itemBuilder: (_, index) =>
         TimelineItem(event: events[index],)
     );
@@ -27,38 +28,26 @@ class TimelineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-  padding: const EdgeInsets.only(right: 30),
-  child: ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: 300
-      ),
-      child: Expanded(
-        child: RichText(
-        text: TextSpan(
-          text: event.title,
-          style: DefaultTextStyle.of(context).style.apply(
-            fontSizeFactor: 1.5,
-            color: Colors.tealAccent
-          ),
-          children: <TextSpan>[
-            TextSpan(
-              text: '''\n${event.timestamp.toString()}''',
-              style: DefaultTextStyle.of(context).style.apply(
-                fontSizeFactor: 0.8,
-                color: Colors.white60
-              ),
+    padding: const EdgeInsets.only(right: 30),
+    child: Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            event.title, 
+            style: DefaultTextStyle.of(context).style.apply(
+              fontSizeFactor: 1.5,
+              color: Colors.tealAccent
             ),
-            TextSpan(
-              text: '''\n${event.description}''',
-              style: DefaultTextStyle.of(context).style.apply(
-                fontSizeFactor: 1,
-                color: Colors.white70
-              ),
-            )
-          ]
-        )
-      ),
+          ),
+          subtitle: Text(
+            event.description,
+            style: DefaultTextStyle.of(context).style.apply(
+              fontSizeFactor: 1,
+              color: Colors.white70
+            ),
+          ),
+        ),
+      ],
     ),
-  ),
-    );
+  );
 }

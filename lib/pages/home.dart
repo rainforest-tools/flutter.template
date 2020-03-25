@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
                       ),
                       Flexible(child: FractionallySizedBox(heightFactor: 0.2,)),
                       Flexible(
-                        child: Timeline(
+                        child: new Timeline(
                           events: events,
                         ),
                       ),
