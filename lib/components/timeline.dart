@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_website/models/event.dart';
 
 class Timeline extends StatelessWidget {
@@ -31,7 +32,16 @@ class TimelineItem extends StatelessWidget {
     padding: const EdgeInsets.only(right: 30),
     child: Column(
       children: <Widget>[
-        Text(event.timestamp.toString()),
+        Text(new DateFormat('yyyy-MM').format(event.timestamp)),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: FractionallySizedBox(
+            widthFactor: 1,
+            child: CustomPaint(
+              painter: _TimelinePainter(),
+            ),
+          ),
+        ),
         ListTile(
           title: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -54,4 +64,33 @@ class TimelineItem extends StatelessWidget {
       ],
     ),
   );
+}
+
+class _TimelinePainter extends CustomPainter {
+
+  _TimelinePainter({
+    Key key,
+    Widget child
+  }) :super();
+
+  final Paint strokePaint = Paint()
+                            ..style = PaintingStyle.stroke;
+  final Paint filledPaint = Paint()
+                            ..color = Colors.tealAccent;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final offsetCenter = size.topCenter(Offset(0, 0));
+    final startPoint = size.centerLeft(Offset(0, 0));
+    final endPoint = size.centerRight(Offset(0, 0));
+    print(size);
+    print(canvas);
+    canvas.drawCircle(offsetCenter, 5, filledPaint);
+    canvas.drawCircle(offsetCenter, 7, strokePaint);
+    canvas.drawLine(startPoint, endPoint.translate(50, 0), strokePaint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  
 }

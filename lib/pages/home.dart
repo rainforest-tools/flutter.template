@@ -7,7 +7,6 @@ import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/event.dart';
 import 'package:personal_website/models/skill.dart';
 import 'package:personal_website/responsive.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
