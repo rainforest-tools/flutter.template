@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
                   childCount: skills.length,
                 ), 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 3, 4),
+                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 4, 4),
                   mainAxisSpacing: 30,
                   crossAxisSpacing: 30,
                 )
