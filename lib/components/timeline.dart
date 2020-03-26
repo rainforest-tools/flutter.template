@@ -83,8 +83,7 @@ class _TimelinePainter extends CustomPainter {
     final offsetCenter = size.topCenter(Offset(0, 0));
     final startPoint = size.centerLeft(Offset(0, 0));
     final endPoint = size.centerRight(Offset(0, 0));
-    print(size);
-    print(canvas);
+    
     canvas.drawCircle(offsetCenter, 5, filledPaint);
     canvas.drawCircle(offsetCenter, 7, strokePaint);
     canvas.drawLine(startPoint, endPoint.translate(50, 0), strokePaint);
