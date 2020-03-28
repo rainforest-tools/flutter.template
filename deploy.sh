@@ -6,6 +6,9 @@ flutter build web --release
 
 cd ./build/web
 
+touch CNAME
+echo "rainforest.tools" > CNAME
+
 git init
 git add -A
 timestamp="`date +'%Y-%m-%dT%T.%3N%z'`"

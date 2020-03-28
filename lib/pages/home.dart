@@ -7,7 +7,6 @@ import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/event.dart';
 import 'package:personal_website/models/skill.dart';
 import 'package:personal_website/responsive.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -106,6 +105,7 @@ class HomePage extends StatelessWidget {
                       ),
                       Flexible(child: FractionallySizedBox(heightFactor: 0.2,)),
                       Flexible(
+                        flex: 2,
                         child: new Timeline(
                           events: events,
                         ),
@@ -127,7 +127,7 @@ class HomePage extends StatelessWidget {
                   childCount: skills.length,
                 ), 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 3, 4),
+                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 4, 4),
                   mainAxisSpacing: 30,
                   crossAxisSpacing: 30,
                 )
