@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:personal_website/components/myAppBar.dart';
+import 'package:personal_website/components/projectCard.dart';
 import 'package:personal_website/components/settingsForm.dart';
 import 'package:personal_website/layouts/default.dart';
+import 'package:personal_website/models/project.dart';
+import 'package:personal_website/responsive.dart';
 import 'package:personal_website/routes/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -23,14 +26,18 @@ class ProjectsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(child: Text(
-        'Comming soooon...', 
-        style: DefaultTextStyle.of(context).style.apply(
-          fontSizeFactor: 2,
-          color: Colors.tealAccent,
-          decoration: TextDecoration.none
-        )
-      ),)
+      body: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width / 100),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 4, 4),
+            mainAxisSpacing: 30,
+            crossAxisSpacing: 30
+          ), 
+          itemCount: projects.length,
+          itemBuilder: (_, index) => ProjectCard(project: projects[index])
+        ),
+      )
     );
   }
 }
