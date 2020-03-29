@@ -34,14 +34,28 @@ class ProjectCard extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Tooltip(
-            message: project.url != null ? project.url : 'Private Project',
-            child: FlatButton.icon(
-              label: Text('前往專案'),
-              icon: Icon(_getIcon()),
-              
-              onPressed: project.url != null ? () => launchURL(project.url) : null
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Tooltip(
+                message: project.url != null ? project.url : 'Private Project',
+                child: FlatButton.icon(
+                  label: Text('前往專案'),
+                  icon: Icon(_getIcon()),
+                  
+                  onPressed: project.url != null ? () => launchURL(project.url) : null
+                ),
+              ),
+              if (project is FrontendProject) () {
+                final frontendProject = project as FrontendProject;
+                final deployUrl = frontendProject.deployUrl;
+                if (deployUrl != null) return FlatButton.icon(
+                  icon: Icon(Icons.web), 
+                  label: Text('Demo'),
+                  onPressed: deployUrl != null ? () => launchURL(deployUrl) : null
+                );
+              }()
+            ],
           ),
         ]
       ),
