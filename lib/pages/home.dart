@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:personal_website/components/bulletList.dart';
 import 'package:personal_website/components/skillCard.dart';
 import 'package:personal_website/components/timeline.dart';
@@ -20,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   ScrollController horizontalScrollController;
   ScrollController verticalScrollController;
 
+  bool isEdge = false;
+
   @override
   Widget build(BuildContext context) {
     controller = PageController(
@@ -28,8 +31,8 @@ class _HomePageState extends State<HomePage> {
     );
     horizontalScrollController = ScrollController();
     verticalScrollController = ScrollController();
-    horizontalScrollController.addListener(_handleHorizontalScroll);
-    verticalScrollController.addListener(_handleVerticalScroll);
+    // horizontalScrollController.addListener(_handleHorizontalScroll);
+    // verticalScrollController.addListener(_handleVerticalScroll);
 
     final _getProfileWidget = (MainAxisAlignment mainAxisAlignment, CrossAxisAlignment crossAxisAlignment) => Column(
       crossAxisAlignment: crossAxisAlignment,
@@ -134,17 +137,33 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width / 20),
-              child: GridView.builder(
-                controller: verticalScrollController,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
-                  mainAxisSpacing: 30,
-                  crossAxisSpacing: 30,
+            NotificationListener<ScrollNotification>(
+              onNotification: (scrollNotification) {
+                if (scrollNotification is ScrollStartNotification) {
+                  print(isEdge);
+                  if (scrollNotification.metrics.atEdge) isEdge = true;
+                }
+                if (scrollNotification is UserScrollNotification) {
+                  if (isEdge && scrollNotification.direction == ScrollDirection.forward) controller.previousPage(
+                    duration: Duration(milliseconds: 300), 
+                    curve: Curves.bounceInOut
+                  );
+                  isEdge = false;
+                }
+                return false;
+              },
+              child: Padding(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width / 20),
+                child: GridView.builder(
+                  controller: verticalScrollController,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
+                    mainAxisSpacing: 30,
+                    crossAxisSpacing: 30,
+                  ),
+                  itemCount: skills.length,
+                  itemBuilder: (_, int index) => SkillCard(skill: skills[index],),
                 ),
-                itemCount: skills.length,
-                itemBuilder: (_, int index) => SkillCard(skill: skills[index],),
               ),
             ),
           ],
@@ -152,12 +171,4 @@ class _HomePageState extends State<HomePage> {
       )
     );
   }
-  
-  void _handleVerticalScroll () {
-    if (verticalScrollController.position.extentBefore < 0) controller.previousPage(
-      duration: Duration(milliseconds: 300), 
-      curve: Curves.bounceInOut
-    );
-  }
-  void _handleHorizontalScroll () {}
 }
