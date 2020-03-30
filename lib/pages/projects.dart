@@ -18,9 +18,10 @@ class ProjectsPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
+            crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 3, 5),
             mainAxisSpacing: 30,
-            crossAxisSpacing: 30
+            crossAxisSpacing: 30,
+            childAspectRatio: 3 / 4
           ), 
           itemCount: projects.length,
           itemBuilder: (_, index) => ProjectCard(project: projects[index])
