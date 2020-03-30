@@ -140,14 +140,13 @@ class _HomePageState extends State<HomePage> {
             NotificationListener<ScrollNotification>(
               onNotification: (scrollNotification) {
                 if (scrollNotification is ScrollStartNotification) {
-                  print(isEdge);
                   if (scrollNotification.metrics.atEdge) isEdge = true;
-                }
-                if (scrollNotification is UserScrollNotification) {
+                } else if (scrollNotification is UserScrollNotification) {
                   if (isEdge && scrollNotification.direction == ScrollDirection.forward) controller.previousPage(
                     duration: Duration(milliseconds: 300), 
                     curve: Curves.bounceInOut
                   );
+                } else {
                   isEdge = false;
                 }
                 return false;
