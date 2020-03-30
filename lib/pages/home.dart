@@ -25,7 +25,56 @@ class HomePage extends StatelessWidget {
               child: Container(
                   height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
-                  child: Row(
+                  child: ResponsiveHelper().isXsmall(context) ?
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Flexible(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: ClipOval(
+                              child: Image(
+                                image: AssetImage('assets/images/profile.JPG'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                '鄭羽霖', 
+                                style: Theme.of(context).textTheme.headline2.apply(
+                                  color: Theme.of(context).primaryColor,
+                                )
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  '研究生＠台大土木電腦輔助工程組\nSpecialize in ML/DL, Frontend',
+                                  style: Theme.of(context).textTheme.subtitle1.apply(
+                                    color: Theme.of(context).textTheme.subtitle1.color.withAlpha(150)
+                                  )
+                                ),
+                              ),
+                              BulletList(
+                                texts: [
+                                  '熱衷學習、使用各種前端框架開發',
+                                  '注重良好 UI/UX',
+                                  '質感、美感偏執，希望能參與各種酷炫視覺效果之應用開發'
+                                ],
+                                textStyle: Theme.of(context).textTheme.headline6,
+                              )
+                            ],
+                          ),
+                        )
+                      ]
+                    )
+                    : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
