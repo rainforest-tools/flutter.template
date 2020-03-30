@@ -6,15 +6,18 @@ import 'package:personal_website/models/event.dart';
 class Timeline extends StatelessWidget {
   const Timeline({
     Key key,
-    this.events
+    this.events,
+    this.controller
   }) : super(key: key);
 
   final List<Event> events;
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context) {
     events.sort((a, b) => a.timestamp.compareTo(b.timestamp));
     return new ListView.builder(
+      controller: controller,
       scrollDirection: Axis.horizontal,
       itemCount: events.length,
       itemExtent: 300,

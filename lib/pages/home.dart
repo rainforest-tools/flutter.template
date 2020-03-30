@@ -7,12 +7,29 @@ import 'package:personal_website/models/event.dart';
 import 'package:personal_website/models/skill.dart';
 import 'package:personal_website/responsive.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({
+    Key key
+  }) : super(key: key);
+
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  PageController controller;
+  ScrollController horizontalScrollController;
+  ScrollController verticalScrollController;
+
   @override
   Widget build(BuildContext context) {
-    final controller = PageController(
-      initialPage: 0
+    controller = PageController(
+      initialPage: 0,
+      keepPage: true
     );
+    horizontalScrollController = ScrollController();
+    verticalScrollController = ScrollController();
+    horizontalScrollController.addListener(_handleHorizontalScroll);
+    verticalScrollController.addListener(_handleVerticalScroll);
 
     final _getProfileWidget = (MainAxisAlignment mainAxisAlignment, CrossAxisAlignment crossAxisAlignment) => Column(
       crossAxisAlignment: crossAxisAlignment,
@@ -112,6 +129,7 @@ class HomePage extends StatelessWidget {
                   flex: 2,
                   child: new Timeline(
                     events: events,
+                    controller: horizontalScrollController,
                   ),
                 ),
               ],
@@ -119,6 +137,7 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width / 20),
               child: GridView.builder(
+                controller: verticalScrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
                   mainAxisSpacing: 30,
@@ -133,4 +152,12 @@ class HomePage extends StatelessWidget {
       )
     );
   }
+  
+  void _handleVerticalScroll () {
+    if (verticalScrollController.position.extentBefore < 0) controller.previousPage(
+      duration: Duration(milliseconds: 300), 
+      curve: Curves.bounceInOut
+    );
+  }
+  void _handleHorizontalScroll () {}
 }
