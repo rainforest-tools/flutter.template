@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_website/components/myAppBar.dart';
-import 'package:personal_website/components/settingsForm.dart';
+import 'package:personal_website/components/bulletList.dart';
 import 'package:personal_website/components/skillCard.dart';
 import 'package:personal_website/components/timeline.dart';
 import 'package:personal_website/layouts/default.dart';
@@ -12,17 +11,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-        appBar: MyAppBar(
-          title: Text('Rainforest'),
-          actions: <Widget>[
-            IconButton(
-                icon: const Icon(Icons.settings),
-                tooltip: 'Settings',
-                onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => SettingsForm())
-                )
-            ),
-          ],
+        appBar: AppBar(
+          title: Text(
+            'Rainforest',
+            // style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         body: CustomScrollView(
           physics: ScrollPhysics(),
@@ -56,31 +49,27 @@ class HomePage extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   '鄭羽霖', 
-                                  style: DefaultTextStyle.of(context).style.apply(
-                                    fontSizeFactor: 2.0,
-                                    color: Colors.tealAccent,
-                                    decoration: TextDecoration.none
-                                  ),
+                                  style: Theme.of(context).textTheme.headline2.apply(
+                                    color: Theme.of(context).primaryColor,
+                                  )
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 10),
                                   child: Text(
-                                    '研究生＠台大土木電腦輔助工程組',
-                                    style: DefaultTextStyle.of(context).style.apply(
-                                      fontSizeFactor: 0.4,
-                                      color: Colors.white60,
-                                      decoration: TextDecoration.none
-                                    ),
+                                    '研究生＠台大土木電腦輔助工程組\nSpecialize in ML/DL, Frontend',
+                                    style: Theme.of(context).textTheme.subtitle1.apply(
+                                      color: Theme.of(context).textTheme.subtitle1.color.withAlpha(150)
+                                    )
                                   ),
                                 ),
-                                Text(
-                                  '熱衷學習、使用各種前端框架開發，質感、美感偏執，希望能參與各種酷炫視覺效果、良好 UI/UX 之應用開發。',
-                                  style: DefaultTextStyle.of(context).style.apply(
-                                    fontSizeFactor: 0.5,
-                                    color: Colors.white70,
-                                    decoration: TextDecoration.none
-                                  ),
-                                ),
+                                BulletList(
+                                  texts: [
+                                    '熱衷學習、使用各種前端框架開發',
+                                    '注重良好 UI/UX',
+                                    '質感、美感偏執，希望能參與各種酷炫視覺效果之應用開發'
+                                  ],
+                                  textStyle: Theme.of(context).textTheme.headline6,
+                                )
                               ],
                             ),
                           ),
@@ -97,11 +86,10 @@ class HomePage extends StatelessWidget {
                     children: <Widget>[
                       Flexible(
                         flex: 2,
-                        child: Text('經歷', style: DefaultTextStyle.of(context).style.apply(
-                          fontSizeFactor: 1,
-                          color: Colors.white,
-                          decoration: TextDecoration.none
-                        ),)
+                        child: Text(
+                          '經歷', 
+                          style: Theme.of(context).textTheme.headline3
+                        )
                       ),
                       Flexible(child: FractionallySizedBox(heightFactor: 0.2,)),
                       Flexible(
@@ -118,16 +106,12 @@ class HomePage extends StatelessWidget {
               sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return Container(
-                      padding: EdgeInsets.all(30),
-                      color: Colors.white70.withOpacity(0.5),
-                      child: SkillCard(skill: skills[index],),
-                    );
+                    return SkillCard(skill: skills[index],);
                   },
                   childCount: skills.length,
                 ), 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 4, 4),
+                  crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
                   mainAxisSpacing: 30,
                   crossAxisSpacing: 30,
                 )

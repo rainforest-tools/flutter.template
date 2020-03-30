@@ -27,6 +27,7 @@ dependencies:
 
   font_awesome_flutter: ^8.7.0
   flutter_brand_icons: ^1.1.0
+  google_fonts: ^0.3.10
 
   provider: ^4.0.4
   intl: ^0.16.1
@@ -68,6 +69,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
+  #   - family: notoSerifTC
+  #     fonts:
+  #       - asset: assets/fonts/Noto_Serif_TC/NotoSerifTC-Regular.otf
+  #         weight: 400
+  #       - asset: assets/fonts/Noto_Serif_TC/NotoSerifTC-Bold.otf
+  #         weight: 700
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

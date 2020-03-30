@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_website/components/bulletList.dart';
 import 'package:personal_website/models/event.dart';
 
 class Timeline extends StatelessWidget {
@@ -32,13 +33,18 @@ class TimelineItem extends StatelessWidget {
     padding: const EdgeInsets.only(right: 30),
     child: Column(
       children: <Widget>[
-        Text(new DateFormat('yyyy-MM').format(event.timestamp)),
+        Text(
+          new DateFormat('yyyy-MM').format(event.timestamp),
+          style: Theme.of(context).textTheme.subtitle2
+        ),
         Padding(
           padding: const EdgeInsets.all(10),
           child: FractionallySizedBox(
             widthFactor: 1,
             child: CustomPaint(
-              painter: _TimelinePainter(),
+              painter: _TimelinePainter(
+                color: Theme.of(context).primaryColor
+              ),
             ),
           ),
         ),
@@ -47,39 +53,54 @@ class TimelineItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
               event.title, 
-              style: DefaultTextStyle.of(context).style.apply(
-                fontSizeFactor: 1.5,
-                color: Colors.tealAccent
-              ),
+              style: Theme.of(context).textTheme.headline6.apply(
+                color: Theme.of(context).primaryColor
+              )
             ),
           ),
-          subtitle: Text(
-            event.description,
-            style: DefaultTextStyle.of(context).style.apply(
-              fontSizeFactor: 1,
-              color: Colors.white70
-            ),
-          ),
+          subtitle: _getDescriptionWidget(context, event.description)
         ),
       ],
     ),
   );
+
+  Widget _getDescriptionWidget (BuildContext context, List<String> description) {
+    final textStyle = Theme.of(context).textTheme.bodyText1;
+    switch (description.length) {
+      case 0:
+        return Text('');
+      case 1:
+        return Text(
+          event.description.first,
+          style: textStyle
+        );
+      default:
+        return BulletList(
+          texts: description,
+          textStyle: textStyle
+        );
+    }
+  }
 }
 
 class _TimelinePainter extends CustomPainter {
 
   _TimelinePainter({
     Key key,
+    this.color,
     Widget child
   }) :super();
 
+  final color;
+
   final Paint strokePaint = Paint()
                             ..style = PaintingStyle.stroke;
-  final Paint filledPaint = Paint()
-                            ..color = Colors.tealAccent;
+  final Paint filledPaint = Paint();
 
   @override
   void paint(Canvas canvas, Size size) {
+    filledPaint.color = color;
+
     final offsetCenter = size.topCenter(Offset(0, 0));
     final startPoint = size.centerLeft(Offset(0, 0));
     final endPoint = size.centerRight(Offset(0, 0));

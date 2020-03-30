@@ -17,20 +17,20 @@ class ProjectCard extends StatelessWidget {
       padding: const EdgeInsets.all(30),
       child: Column(
         children: <Widget>[
-          Text(
-            project.name,
-            style: DefaultTextStyle.of(context).style.apply(
-              fontSizeFactor: 2,
-              color: Colors.tealAccent
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              project.name,
+              style: Theme.of(context).textTheme.headline6.apply(
+                color: Theme.of(context).primaryColor
+              )
             ),
           ),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               project.description,
-              style: DefaultTextStyle.of(context).style.apply(
-                color: Colors.white70
-              ),
+              style: Theme.of(context).textTheme.bodyText1
             ),
           ),
           Spacer(),
