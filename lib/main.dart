@@ -16,7 +16,7 @@ void main() {
           routesNotifier.configure();
           return routesNotifier;
         }),
-        ChangeNotifierProvider<SettingsNotifier>(create: (_) => SettingsNotifier())
+        ChangeNotifierProvider<SettingsNotifier>(create: (_) => SettingsNotifier()),
       ],
       child: MyApp(),
     )

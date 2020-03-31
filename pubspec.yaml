@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -25,9 +25,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
+  font_awesome_flutter: ^8.7.0
+  flutter_brand_icons: ^1.1.0
+  google_fonts: ^0.3.10
+
   provider: ^4.0.4
+  intl: ^0.16.1
+  url_launcher: ^5.4.2
   # Router for flutter
-  fluro: ^1.6.0
+  fluro: ^1.6.1
+  # RWD
+  
 
 dev_dependencies:
   flutter_test:
@@ -45,8 +53,15 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/profile.JPG
+    - assets/images/projects/未來科技展微結構設計成果展示平台.png
+    - assets/images/projects/APCOM 議程網頁.png
+    - assets/images/projects/Palette Manager.png
+    - assets/images/projects/Workshop Slides and Examples.png
+    - assets/images/projects/Cards Carousel.png
+    - assets/images/projects/Color Editor.png
+    - assets/images/projects/TSA Handbook.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -61,6 +76,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
+  #   - family: notoSerifTC
+  #     fonts:
+  #       - asset: assets/fonts/Noto_Serif_TC/NotoSerifTC-Regular.otf
+  #         weight: 400
+  #       - asset: assets/fonts/Noto_Serif_TC/NotoSerifTC-Bold.otf
+  #         weight: 700
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

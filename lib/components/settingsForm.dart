@@ -6,7 +6,10 @@ import 'package:provider/provider.dart';
 class SettingsForm extends StatefulWidget {
   const SettingsForm({
     Key key,
+    this.backArrowAction
   }) : super(key: key);
+
+  final void Function() backArrowAction;
 
   @override
   _SettingsFormState createState() => _SettingsFormState();
@@ -21,6 +24,10 @@ class _SettingsFormState extends State<SettingsForm> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), 
+          onPressed: widget.backArrowAction
+        ),
         title: const Text('Setting')
       ),
       body: Padding(
