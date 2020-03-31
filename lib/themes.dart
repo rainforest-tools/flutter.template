@@ -21,7 +21,23 @@ final darkTheme = ThemeData(
     iconTheme: IconThemeData(
       color: Colors.white
     )
-  )
+  ),
+  colorScheme: darkColorScheme
+);
+
+final darkColorScheme = ColorScheme.dark(
+  primary: Colors.tealAccent[100],
+  primaryVariant: Colors.tealAccent[700],
+  secondary: Colors.indigo[100],
+  secondaryVariant: Colors.indigo[400],
+  surface: Colors.black87,
+  background: Colors.black87,
+  error: Colors.red[200],
+  onPrimary: Colors.black87,
+  onSecondary: Colors.black87,
+  onSurface: Colors.white70,
+  onBackground: Colors.white70,
+  onError: Colors.black87
 );
 
 final lightTheme = ThemeData(

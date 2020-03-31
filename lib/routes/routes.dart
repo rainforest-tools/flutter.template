@@ -11,7 +11,11 @@ void configureRoutes(Router router, List<RouteModel> routeHandlers) {
     }
   );
   routeHandlers.forEach((routeHandler) {
-    router.define(routeHandler.path, handler: routeHandler.handler);
+    router.define(
+      routeHandler.path, 
+      handler: routeHandler.handler,
+      transitionType: TransitionType.fadeIn
+    );
   });
 }
 
