@@ -1,6 +1,9 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_website/components/settingsForm.dart';
 import 'package:personal_website/routes/route_handlers.dart';
+import 'package:personal_website/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 class DefaultLayout extends StatelessWidget {
   const DefaultLayout({
@@ -12,6 +15,7 @@ class DefaultLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final routesNotifier = Provider.of<Routes>(context);
     final controller = PageController(
       initialPage: 0
     );
@@ -38,8 +42,22 @@ class DefaultLayout extends StatelessWidget {
                           ),
                           onTap: () {
                             Navigator.popUntil(context, (route) {
-                              if ( route.settings.name != route_handlers[index].path) {
-                                Navigator.pushNamed(context, route_handlers[index].path);
+                              if (route.settings.name != route_handlers[index].path) {
+                                // Navigator.pushNamed(context, route_handlers[index].path);
+                                if (route_handlers[index].transitionType == TransitionType.custom) {
+                                  routesNotifier.router.navigateTo(
+                                    context, 
+                                    route_handlers[index].path,
+                                    transition: TransitionType.custom,
+                                    transitionDuration: Duration(milliseconds: 800),
+                                    transitionBuilder: route_handlers[index].transitionBuilder
+                                  );
+                                } else {
+                                  routesNotifier.router.navigateTo(
+                                    context, 
+                                    route_handlers[index].path,
+                                  );
+                                };
                               }
                               return true;
                             });
