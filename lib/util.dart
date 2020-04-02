@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:fluro/fluro.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void launchURL(String url) async {
@@ -7,3 +11,12 @@ void launchURL(String url) async {
     // throw 'Could not launch $url';
   }
 }
+
+T enumFromString<T>(Iterable<T> values, String value) {
+  return value != null ? values.firstWhere(
+    (type) => type.toString().split('.').last.toLowerCase() == value.toLowerCase(),
+    orElse: () => null
+  ) : null;
+}
+
+String getIdFromUniqueKey(UniqueKey key) => key.toString().replaceAll(new RegExp(r'[\[\]\#]'), '');

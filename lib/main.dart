@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_website/models/project.dart';
 import 'package:personal_website/models/settings.dart';
 import 'package:personal_website/routes/routes.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ void main() {
           return routesNotifier;
         }),
         ChangeNotifierProvider<SettingsNotifier>(create: (_) => SettingsNotifier()),
+        ChangeNotifierProvider<TagsNotifier>(create: (_) => TagsNotifier(),)
       ],
       child: MyApp(),
     )
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'Rainforest',
       debugShowCheckedModeBanner: false,
       theme: themeNotifier.getTheme(),
-      onGenerateRoute: routesNotifier.router.generator,
+      onGenerateRoute: (routeSettings) => routesNotifier.router.generator(context, routeSettings),
     );
   }
 }

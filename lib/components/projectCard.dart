@@ -14,73 +14,111 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: <Widget>[
-      AspectRatio(
-        aspectRatio: 4 / 3,
-        child: project.imageUrl != null ? Image(
-          image: AssetImage(project.imageUrl),
-          fit: BoxFit.cover,
-        ) : Card(
-          color: Theme.of(context).accentColor,
-          child: Center(child: Icon(Icons.image))
+      Hero(
+        tag: 'projectCard ${getIdFromUniqueKey(project.id)}',
+        child: AspectRatio(
+          aspectRatio: 4 / 3,
+          child: project.imageUrl != null ? Image(
+            image: AssetImage(project.imageUrl),
+            fit: BoxFit.cover,
+          ) : Card(
+            color: Theme.of(context).accentColor,
+            child: Center(child: Icon(Icons.image))
+          ),
         ),
       ),
       Flexible(
+        flex: 1,
         child: Transform.translate(
           offset: Offset(0, -30),
-          child: Card(
-            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 100),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      project.name,
-                      style: Theme.of(context).textTheme.headline6.apply(
-                        color: Theme.of(context).primaryColor
-                      )
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      project.description,
-                      style: Theme.of(context).textTheme.bodyText1
-                    ),
-                  ),
-                  Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: FractionallySizedBox(
+            widthFactor: 0.85,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  bottomNavigationBar: ProjectCardActions(project: project, mainAxisAlignment: MainAxisAlignment.spaceAround,),
+                  body: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Tooltip(
-                        message: project.url != null ? project.url : 'Private Project',
-                        child: FlatButton.icon(
-                          label: Text('前往專案'),
-                          icon: Icon(_getIcon()),
-                          
-                          onPressed: project.url != null ? () => launchURL(project.url) : null
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Text(
+                          project.name,
+                          style: Theme.of(context).textTheme.headline6.apply(
+                            color: Theme.of(context).primaryColor
+                          )
                         ),
                       ),
-                      if (project is FrontendProject) () {
-                        final frontendProject = project as FrontendProject;
-                        final deployUrl = frontendProject.deployUrl;
-                        if (deployUrl != null) return FlatButton.icon(
-                          icon: Icon(Icons.web), 
-                          label: Text('Demo'),
-                          onPressed: deployUrl != null ? () => launchURL(deployUrl) : null
-                        );
-                      }()
-                    ],
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          project.description,
+                          style: Theme.of(context).textTheme.bodyText1
+                        ),
+                      ),
+                    ]
                   ),
-                ]
-              ),
+                ),
+              )
             ),
           ),
         ),
       ),
     ],
   );
+}
+
+class ProjectCardActions extends StatelessWidget {
+  const ProjectCardActions({
+    Key key, 
+    @required this.project,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.isLabelShowed = true
+  }) : super(key: key);
+
+  final Project project;
+  final MainAxisAlignment mainAxisAlignment;
+  final bool isLabelShowed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: mainAxisAlignment,
+        children: <Widget>[
+          Tooltip(
+            message: project.url != null ? project.url : 'Private Project',
+            child: isLabelShowed ? FlatButton.icon(
+              label: Text('前往專案'),
+              icon: Icon(_getIcon()),
+              onPressed: project.url != null ? () => launchURL(project.url) : null
+            ) : IconButton(
+              padding: EdgeInsets.all(0),
+              alignment: Alignment.centerLeft,
+              icon: Icon(_getIcon()),
+              onPressed: project.url != null ? () => launchURL(project.url) : null
+            ),
+          ),
+          if (project is FrontendProject) () {
+            final frontendProject = project as FrontendProject;
+            final deployUrl = frontendProject.deployUrl;
+            if (deployUrl != null) return isLabelShowed ? FlatButton.icon(
+              icon: Icon(Icons.web), 
+              label: isLabelShowed ? Text('Demo') : Text(''),
+              onPressed: deployUrl != null ? () => launchURL(deployUrl) : null
+            ) : IconButton(
+              padding: EdgeInsets.all(0),
+              alignment: Alignment.centerLeft,
+              icon: Icon(Icons.web), 
+              onPressed: deployUrl != null ? () => launchURL(deployUrl) : null
+            );
+          }()
+        ],
+      ),
+    );
+  }
 
   IconData _getIcon() {
     if (project is CodepenProject) return BrandIcons.codepen;

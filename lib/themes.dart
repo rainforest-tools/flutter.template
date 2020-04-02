@@ -22,7 +22,7 @@ final darkTheme = ThemeData(
       color: Colors.white
     )
   ),
-  colorScheme: darkColorScheme
+  colorScheme: darkColorScheme,
 );
 
 final darkColorScheme = ColorScheme.dark(
@@ -30,14 +30,14 @@ final darkColorScheme = ColorScheme.dark(
   primaryVariant: Colors.tealAccent[700],
   secondary: Colors.indigo[100],
   secondaryVariant: Colors.indigo[400],
-  surface: Colors.black87,
-  background: Colors.black87,
+  surface: Colors.black54,
+  background: Colors.black54,
   error: Colors.red[200],
-  onPrimary: Colors.black87,
-  onSecondary: Colors.black87,
+  onPrimary: Colors.black54,
+  onSecondary: Colors.black54,
   onSurface: Colors.white70,
   onBackground: Colors.white70,
-  onError: Colors.black87
+  onError: Colors.black54
 );
 
 final lightTheme = ThemeData(
@@ -101,5 +101,10 @@ final textTheme = TextTheme(
     fontWeight: FontWeight.w500,
     fontSize: 14,
     letterSpacing: 0.1,
+  ),
+  bodyText1: GoogleFonts.roboto(
+    fontWeight: FontWeight.normal,
+    fontSize: 16,
+    letterSpacing: 0.5
   )
 );
