@@ -22,18 +22,18 @@ class ResponsiveHelper {
   bool isXlarge(BuildContext context) {
     return MediaQuery.of(context).size.width >= 1920;
   }
-  int columns(BuildContext context, int xs, int sm, int md, int lg, int xl) {
+  T valueGiver<T>(BuildContext context, T xs, T sm, T md, T lg, T xl) {
     if (isXsmall(context)) return xs;
     if (isSmall(context)) return sm;
     if (isMedium(context)) return md;
     if (isLarge(context)) return lg;
     if (isXlarge(context)) return xl;
   }
-  int gutters(BuildContext context, int xs, int sm, int md, int lg, int xl) {
-    if (isXsmall(context)) return xs;
-    if (isSmall(context)) return sm;
-    if (isMedium(context)) return md;
-    if (isLarge(context)) return lg;
-    if (isXlarge(context)) return xl;
+
+  double ratio(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    if (width < height) return height / width;
+    else return width / height;
   }
 }

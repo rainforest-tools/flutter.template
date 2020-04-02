@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:personal_website/components/SocialBar.dart';
 import 'package:personal_website/components/bulletList.dart';
 import 'package:personal_website/components/skillCard.dart';
 import 'package:personal_website/components/timeline.dart';
@@ -74,6 +75,9 @@ class _HomePageState extends State<HomePage> {
           'Rainforest',
           // style: Theme.of(context).textTheme.headline6,
         ),
+        actions: <Widget>[
+          SocialBar()
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
@@ -156,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                 child: GridView.builder(
                   controller: verticalScrollController,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
+                    crossAxisCount: ResponsiveHelper().valueGiver<int>(context, 1, 1, 3, 4, 5),
                     mainAxisSpacing: 30,
                     crossAxisSpacing: 30,
                   ),

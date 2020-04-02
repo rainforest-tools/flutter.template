@@ -60,7 +60,23 @@ final lightTheme = ThemeData(
     iconTheme: IconThemeData(
       color: Colors.black
     )
-  )
+  ),
+  colorScheme: lightColorScheme
+);
+
+final lightColorScheme = ColorScheme.dark(
+  primary: Colors.tealAccent[100],
+  primaryVariant: Colors.tealAccent[700],
+  secondary: Colors.indigo[100],
+  secondaryVariant: Colors.indigo[400],
+  surface: Colors.white70,
+  background: Colors.white70,
+  error: Colors.red[200],
+  onPrimary: Colors.white70,
+  onSecondary: Colors.white70,
+  onSurface: Colors.black87,
+  onBackground: Colors.black87,
+  onError: Colors.white70
 );
 
 class ThemeNotifier with ChangeNotifier {

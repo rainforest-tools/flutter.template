@@ -89,7 +89,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
                     borderRadius: BorderRadius.horizontal(right: Radius.circular(30), left: Radius.circular(30)),
                   ),
                   color: Theme.of(context).dividerColor,
-                  child: SizedBox(height: 60, child: Icon(Icons.arrow_back)),
+                  child: SizedBox(height: 60, child: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onBackground,)),
                   onPressed: () => Navigator.of(context).pushNamed('/projects'),
                 ),
                 Expanded(
@@ -120,7 +120,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
                     borderRadius: BorderRadius.horizontal(right: Radius.circular(30), left: Radius.circular(30)),
                   ),
                   color: Theme.of(context).dividerColor,
-                  child: SizedBox(height: 60, child: Icon(Icons.search)),
+                  child: SizedBox(height: 60, child: Icon(Icons.search, color: Theme.of(context).colorScheme.onBackground,)),
                   onPressed: () {
                     showSearch(
                       context: context, 
@@ -145,11 +145,11 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
     final tagsNotifier = Provider.of<TagsNotifier>(context);
     switch (widget.mode) {
       case Mode.DETAIL:
-        return Row(
+        if (!ResponsiveHelper().isXsmall(context)) return Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Flexible(
-              flex: 3,
+              flex: ResponsiveHelper().valueGiver(context, 1, 1, 2, 3, 3),
               child: Center(
                 child: ListWheelScrollView.useDelegate(
                   controller: _wheelScrollController,
@@ -157,7 +157,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
                   diameterRatio: 50,
                   squeeze: 0.9,
                   offAxisFraction: 0.9,
-                  itemExtent: MediaQuery.of(context).size.height * 0.8,
+                  itemExtent: _getListWheelScrollViewItemExtent(context, 0.8),
                   childDelegate: ListWheelChildBuilderDelegate(
                     childCount: tagsNotifier.filtedProjects.length,
                     builder: (context, index) {
@@ -166,7 +166,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
                       return Hero(
                         tag: 'projectCard ${getIdFromUniqueKey(project.id)}',
                         child: AspectRatio(
-                          aspectRatio: MediaQuery.of(context).size.width / MediaQuery.of(context).size.height,
+                          aspectRatio: ResponsiveHelper().ratio(context),
                           child: project.imageUrl != null ? 
                             Card(
                               child: Image(
@@ -197,7 +197,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
             ),
             Expanded(
               child: Transform.translate(
-                offset: Offset(-100, -100),
+                offset: Offset(-MediaQuery.of(context).size.width / 20, -MediaQuery.of(context).size.height / 100),
                 child: Transform(
                   alignment: Alignment.topCenter,
                   transform: Matrix4(
@@ -238,7 +238,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
                               ),
                             ),
                             ProjectCardActions(project: _selectedProject, isLabelShowed: false,),
-                            Spacer(),
+                            Flexible(child: FractionallySizedBox(heightFactor: 0.1)),
                             Wrap(
                               spacing: 10,
                               direction: Axis.horizontal,
@@ -259,10 +259,61 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
             )
           ],
         );
+        return ListView(
+          children: <Widget>[
+            Hero(
+              tag: 'projectCard ${getIdFromUniqueKey(_selectedProject.id)}',
+              child: _selectedProject.imageUrl != null ? 
+                Card(
+                  child: Image(
+                    fit: BoxFit.cover,
+                    image: AssetImage(_selectedProject.imageUrl)
+                  ),
+                ) : AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: Card(
+                    color: Theme.of(context).accentColor,
+                    child: Center(child: Icon(Icons.image))
+                  ),
+                ),
+            ),
+            Text(
+              _selectedProject.name,
+              style: Theme.of(context).textTheme.headline6.apply(
+                color: Theme.of(context).primaryColor
+              )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                _selectedProject.timestamp.length == 1 ?
+                  new DateFormat('yyyy 年 MM 月').format(_selectedProject.timestamp.first) :
+                  '${new DateFormat('yyyy 年 MM 月').format(_selectedProject.timestamp.first)} - ${new DateFormat('yyyy 年 MM 月').format(_selectedProject.timestamp.last)}',
+                style: Theme.of(context).textTheme.subtitle2
+              ),
+            ),
+            Text(
+              _selectedProject.description,
+              style: Theme.of(context).textTheme.bodyText1
+            ),
+            ProjectCardActions(project: _selectedProject, isLabelShowed: false,),
+            Spacer(),
+            Wrap(
+              spacing: 10,
+              direction: Axis.horizontal,
+              children: _selectedProject.tags.map((tag) => ActionChip(
+                avatar: tag.icon != null ? Icon(tag.icon) : null,
+                backgroundColor: tag.isSelected ? Theme.of(context).accentColor : null,
+                label: Text(tag.name),
+                onPressed: () => _onChipPressed(tag, tagsNotifier)
+              )).toList()
+            )
+          ]
+        );
       default:
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 2, 3, 5),
+            crossAxisCount: ResponsiveHelper().valueGiver<int>(context, 1, 1, 2, 3, 5),
             mainAxisSpacing: 30,
             crossAxisSpacing: 30,
             childAspectRatio: 1 / 1.4
@@ -287,6 +338,13 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
       if (index == -1) _selectedProject = tagsNotifier.filtedProjects.first;
     });
     _wheelScrollController.jumpToItem(index);
+  }
+
+  double _getListWheelScrollViewItemExtent(BuildContext context, double ratio) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    if (width >= height) return height * ratio;
+    else return width * ratio;
   }
 }
 
