@@ -41,28 +41,37 @@ class _TranditionalResumeState extends State<TranditionalResume> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          '鄭羽霖', 
-          style: Theme.of(context).textTheme.headline6.apply(
-            color: Theme.of(context).primaryColor,
-          )
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+        Hero(
+          tag: 'profile_name',
           child: Text(
-            '研究生＠台大土木電腦輔助工程組\nSpecialize in ML/DL, Frontend',
-            style: Theme.of(context).textTheme.overline.apply(
-              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(150)
+            '鄭羽霖', 
+            style: Theme.of(context).textTheme.headline6.apply(
+              color: Theme.of(context).primaryColor,
             )
           ),
         ),
-        BulletList(
-          texts: [
-            '熱衷學習、使用各種前端框架開發',
-            '注重良好 UI/UX',
-            '質感、美感偏執，希望能參與各種酷炫視覺效果之應用開發'
-          ],
-          textStyle: Theme.of(context).textTheme.overline,
+        Hero(
+          tag: 'profile_job_title',
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              '研究生＠台大土木電腦輔助工程組\nSpecialize in ML/DL, Frontend',
+              style: Theme.of(context).textTheme.overline.apply(
+                color: Theme.of(context).textTheme.subtitle1.color.withAlpha(150)
+              )
+            ),
+          ),
+        ),
+        Hero(
+          tag: 'profile_description',
+          child: BulletList(
+            texts: [
+              '熱衷學習、使用各種前端框架開發',
+              '注重良好 UI/UX',
+              '質感、美感偏執，希望能參與各種酷炫視覺效果之應用開發'
+            ],
+            textStyle: Theme.of(context).textTheme.overline,
+          ),
         ),
         Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,)),
       ],
