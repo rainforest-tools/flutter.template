@@ -64,9 +64,16 @@ class _HomePageState extends State<HomePage> {
         )
       ],
     );
-    final profileImage = Image(
-      image: AssetImage('assets/images/profile.JPG'),
-      fit: BoxFit.cover,
+    
+    final profileImage = Hero(
+      tag: 'profileImage',
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(300),
+        child: Image(
+          image: AssetImage('assets/images/profile.JPG'),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
 
     return DefaultLayout(
@@ -76,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           // style: Theme.of(context).textTheme.headline6,
         ),
         actions: <Widget>[
-          SocialBar()
+          Hero(tag: 'socialLinks', child: new SocialBar())
         ],
       ),
       body: Padding(
@@ -106,10 +113,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Flexible(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(300),
-                      child: profileImage
-                    ),
+                    child: profileImage
                   ),
                   Flexible(
                     child: Transform.translate(
@@ -126,9 +130,12 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Flexible(
                   flex: 2,
-                  child: Text(
-                    '經歷', 
-                    style: Theme.of(context).textTheme.headline3
+                  child: Hero(
+                    tag: 'experience',
+                    child: Text(
+                      '經歷', 
+                      style: Theme.of(context).textTheme.headline3
+                    ),
                   )
                 ),
                 Flexible(child: FractionallySizedBox(heightFactor: 0.2,)),
@@ -137,6 +144,11 @@ class _HomePageState extends State<HomePage> {
                   child: new Timeline(
                     events: events,
                     controller: horizontalScrollController,
+                    timestampStyle: Theme.of(context).textTheme.subtitle2,
+                    nameStyle: Theme.of(context).textTheme.headline6.apply(
+                      color: Theme.of(context).primaryColor
+                    ),
+                    descriptionStyle: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
               ],

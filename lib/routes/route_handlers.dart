@@ -1,8 +1,11 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_website/models/settings.dart';
 import 'package:personal_website/pages/home.dart';
 import 'package:personal_website/pages/projects.dart';
+import 'package:personal_website/pages/tranditionalResume.dart';
 import 'package:personal_website/util.dart';
+import 'package:provider/provider.dart';
 
 class RouteModel {
   RouteModel({
@@ -10,6 +13,7 @@ class RouteModel {
     this.title,
     this.path,
     this.queryRule = '',
+    this.showOnDrawer = true,
     this.handler,
     this.transitionType = TransitionType.fadeIn,
     this.transitionBuilder,
@@ -19,6 +23,7 @@ class RouteModel {
   final String title;
   final String path;
   final String queryRule;
+  final bool showOnDrawer;
   final Handler handler;
   final TransitionType transitionType;
   final Widget Function(BuildContext, Animation<double>, Animation<double>, Widget) transitionBuilder;
@@ -30,10 +35,14 @@ var route_handlers = [
     title: 'Home',
     path: '/',
     handler: new Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) => HomePage()
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        final settingsNotifier = Provider.of<SettingsNotifier>(context);
+        if(settingsNotifier != null && settingsNotifier.settings.layout == Layout.RESUME) return TranditionalResume();
+        return HomePage();
+      }
     ),
     transitionType: TransitionType.custom,
-    transitionBuilder: transitionBuilder
+    transitionBuilder: transitionBuilder,
   ),
   new RouteModel(
     title: 'Projects',
@@ -63,6 +72,18 @@ var route_handlers = [
       ),
     ]
   ),
+  new RouteModel(
+    title: 'Tranditional Resume',
+    path: '/resume',
+    showOnDrawer: false,
+    handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+        return TranditionalResume();
+      }
+    ),
+    transitionType: TransitionType.custom,
+    transitionBuilder: transitionBuilder,
+  )
 ];
 
 Widget transitionBuilder (context, animation, secondaryAnimation, child) {

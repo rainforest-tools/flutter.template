@@ -103,6 +103,11 @@ final textTheme = TextTheme(
     fontSize: 49,
     letterSpacing: 0
   ),
+  headline4: GoogleFonts.notoSerif(
+    fontWeight: FontWeight.normal,
+    fontSize: 34,
+    letterSpacing: 0.25
+  ),
   headline6: GoogleFonts.notoSerif(
     fontWeight: FontWeight.w500,
     fontSize: 21,
@@ -122,5 +127,15 @@ final textTheme = TextTheme(
     fontWeight: FontWeight.normal,
     fontSize: 16,
     letterSpacing: 0.5
+  ),
+  caption: GoogleFonts.notoSerif(
+    fontWeight: FontWeight.normal,
+    fontSize: 10,
+    letterSpacing: 0.4
+  ),
+  overline: GoogleFonts.roboto(
+    fontWeight: FontWeight.normal,
+    fontSize: 8,
+    letterSpacing: 1.5
   )
 );

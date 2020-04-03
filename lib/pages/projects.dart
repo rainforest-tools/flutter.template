@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_website/components/SocialBar.dart';
 import 'package:personal_website/components/projectCard.dart';
 import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/project.dart';
@@ -73,7 +74,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
           'Projects'
         ),
         actions: <Widget>[
-          
+          Hero(tag: 'socialLinks', child: new SocialBar())
         ],
       ),
       body: Padding(

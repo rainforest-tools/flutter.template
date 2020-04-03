@@ -43,6 +43,19 @@ class _SettingsFormState extends State<SettingsForm> {
                   settingsNotifier.setSettings(SettingsEnum.isDarkMode, value);
                   settingsNotifier.settings.isDarkMode ? themeNotifier.setTheme(darkTheme) : themeNotifier.setTheme(lightTheme);
                 }
+              ),
+              DropdownButtonFormField(
+                decoration: InputDecoration(
+                  labelText: 'Layout'
+                ),
+                items: Layout.values.map((e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.toString().split('.').last.toLowerCase())
+                )).toList(), 
+                onChanged: (value) {
+                  print(value);
+                  settingsNotifier.setSettings(SettingsEnum.layout, value);
+                }
               )
             ]
           ),
