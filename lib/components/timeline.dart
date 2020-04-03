@@ -8,6 +8,7 @@ class Timeline extends StatelessWidget {
     Key key,
     @required this.events,
     this.direction = Axis.horizontal,
+    this.isReversed = true,
     this.controller,
     @required this.timestampStyle,
     @required this.nameStyle,
@@ -16,6 +17,7 @@ class Timeline extends StatelessWidget {
 
   final List<Event> events;
   final Axis direction;
+  final bool isReversed;
   final ScrollController controller;
   final TextStyle timestampStyle;
   final TextStyle nameStyle;
@@ -24,15 +26,16 @@ class Timeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     events.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    final sortedEvents = isReversed ? events.reversed.toList() : events;
     if (direction == Axis.horizontal)
       return new ListView.builder(
         controller: controller,
         scrollDirection: direction,
-        itemCount: events.length,
+        itemCount: sortedEvents.length,
         itemExtent: 300,
         itemBuilder: (_, index) =>
           TimelineItem(
-            event: events[index], 
+            event: sortedEvents[index], 
             direction: direction,
             isReversed: index.isEven ? false : true,
             timestampStyle: timestampStyle, 
@@ -41,12 +44,11 @@ class Timeline extends StatelessWidget {
           )
       );
     else
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: events.map((event) => TimelineItem(
+      return ListView(
+        children: sortedEvents.map((event) => TimelineItem(
           event: event, 
           direction: direction,
-          isReversed: events.indexOf(event).isEven ? false : true,
+          isReversed: sortedEvents.indexOf(event).isEven ? false : true,
           timestampStyle: timestampStyle, 
           nameStyle: nameStyle, 
           descriptionStyle: descriptionStyle

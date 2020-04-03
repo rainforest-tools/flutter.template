@@ -45,6 +45,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 }
               ),
               DropdownButtonFormField(
+                value: settingsNotifier.settings.layout,
                 decoration: InputDecoration(
                   labelText: 'Layout'
                 ),

@@ -64,11 +64,10 @@ class _TranditionalResumeState extends State<TranditionalResume> {
           ],
           textStyle: Theme.of(context).textTheme.overline,
         ),
-        Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,))
       ],
     );
     final experienceTimeline = new Timeline(
-      events: events,
+      events: events.reversed.toList(),
       direction: Axis.vertical,
       timestampStyle: Theme.of(context).textTheme.overline,
       nameStyle: Theme.of(context).textTheme.caption.apply(
@@ -84,7 +83,7 @@ class _TranditionalResumeState extends State<TranditionalResume> {
           'Rainforest',
         ),
         actions: <Widget>[
-          // SocialBar()
+          Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,))
         ],
       ),
       body: Center(
