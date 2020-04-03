@@ -93,12 +93,12 @@ class ProjectCardActions extends StatelessWidget {
             child: isLabelShowed ? FlatButton.icon(
               label: Text('前往專案'),
               icon: Icon(_getIcon()),
-              onPressed: project.url != null ? () => launchURL(project.url) : null
+              onPressed: project.url != null ? () => launchURL(context, project.url) : null
             ) : IconButton(
               padding: EdgeInsets.all(0),
               alignment: Alignment.centerLeft,
               icon: Icon(_getIcon()),
-              onPressed: project.url != null ? () => launchURL(project.url) : null
+              onPressed: project.url != null ? () => launchURL(context, project.url) : null
             ),
           ),
           if (project is FrontendProject) () {
@@ -107,12 +107,12 @@ class ProjectCardActions extends StatelessWidget {
             if (deployUrl != null) return isLabelShowed ? FlatButton.icon(
               icon: Icon(Icons.web), 
               label: isLabelShowed ? Text('Demo') : Text(''),
-              onPressed: deployUrl != null ? () => launchURL(deployUrl) : null
+              onPressed: deployUrl != null ? () => launchURL(context, deployUrl) : null
             ) : IconButton(
               padding: EdgeInsets.all(0),
               alignment: Alignment.centerLeft,
               icon: Icon(Icons.web), 
-              onPressed: deployUrl != null ? () => launchURL(deployUrl) : null
+              onPressed: deployUrl != null ? () => launchURL(context, deployUrl) : null
             );
           }()
         ],

@@ -23,6 +23,9 @@ final darkTheme = ThemeData(
     )
   ),
   colorScheme: darkColorScheme,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.tealAccent[100],
+  )
 );
 
 final darkColorScheme = ColorScheme.dark(
@@ -61,7 +64,10 @@ final lightTheme = ThemeData(
       color: Colors.black
     )
   ),
-  colorScheme: lightColorScheme
+  colorScheme: lightColorScheme,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.teal
+  )
 );
 
 final lightColorScheme = ColorScheme.dark(

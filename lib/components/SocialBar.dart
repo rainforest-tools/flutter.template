@@ -13,33 +13,25 @@ class SocialBar extends StatelessWidget {
       color: Colors.transparent,
       child: Row(
         children: <Widget>[
-          Tooltip(
-            message: 'E-Mail',
-            child: IconButton(
-              icon: Icon(Icons.mail_outline, size: iconSize,), 
-              onPressed: () => launchURL('mailto:rainforestnick@gmail.com')
-            ),
+          IconButton(
+            tooltip: 'E-Mail',
+            icon: Icon(Icons.mail_outline, size: iconSize,), 
+            onPressed: () => launchURL(context, 'mailto:rainforestnick@gmail.com')
           ),
-          Tooltip(
-            message: 'LinkedIn',
-            child: IconButton(
-              icon: Icon(FontAwesomeIcons.linkedin, size: iconSize), 
-              onPressed: () => launchURL('https://www.linkedin.com/in/yulin-cheng-530b2911b/')
-            ),
+          IconButton(
+            tooltip: 'LinkedIn',
+            icon: Icon(FontAwesomeIcons.linkedin, size: iconSize), 
+            onPressed: () => launchURL(context, 'https://www.linkedin.com/in/yulin-cheng-530b2911b/')
           ),
-          Tooltip(
-            message: 'Medium',
-            child: IconButton(
-              icon: Icon(FontAwesomeIcons.medium, size: iconSize), 
-              onPressed: () => launchURL('https://medium.com/@rainforestnick')
-            ),
+          IconButton(
+            tooltip: 'Medium',
+            icon: Icon(FontAwesomeIcons.medium, size: iconSize), 
+            onPressed: () => launchURL(context, 'https://medium.com/@rainforestnick')
           ),
-          Tooltip(
-            message: 'Instagram',
-            child: IconButton(
-              icon: Icon(FontAwesomeIcons.instagram, size: iconSize), 
-              onPressed: () => launchURL('https://www.instagram.com/rainforest__film/')
-            ),
+          IconButton(
+            tooltip: 'Instagram',
+            icon: Icon(FontAwesomeIcons.instagram, size: iconSize), 
+            onPressed: () => launchURL(context, 'https://www.instagram.com/rainforest__film/')
           ),
         ],
       ),

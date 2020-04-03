@@ -64,6 +64,7 @@ class _TranditionalResumeState extends State<TranditionalResume> {
           ],
           textStyle: Theme.of(context).textTheme.overline,
         ),
+        Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,)),
       ],
     );
     final experienceTimeline = new Timeline(
@@ -83,7 +84,7 @@ class _TranditionalResumeState extends State<TranditionalResume> {
           'Rainforest',
         ),
         actions: <Widget>[
-          Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,))
+          // Hero(tag: 'socialLinks', child: new SocialBar())
         ],
       ),
       body: Center(
@@ -98,106 +99,107 @@ class _TranditionalResumeState extends State<TranditionalResume> {
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Stack(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Flexible(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Flexible(
-                                    child: AspectRatio(
-                                      aspectRatio: 1,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.8,
-                                        heightFactor: 0.8,
-                                        child: ClipRRect(
-                                          child: profileImage
+                    child: Scaffold(
+                      body: Stack(
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Flexible(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: FractionallySizedBox(
+                                          widthFactor: 0.8,
+                                          heightFactor: 0.8,
+                                          child: ClipRRect(
+                                            child: profileImage
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                  ),
-                                  Flexible(child: profile)
-                                ]
+                                      )
+                                    ),
+                                    Flexible(child: profile)
+                                  ]
+                                ),
                               ),
-                            ),
-                            Flexible(
-                              flex: 3,
-                              child: Row(
-                                children: <Widget>[
-                                  Flexible(
-                                    fit: FlexFit.tight,
-                                    child: Stack(
-                                      alignment: Alignment.center,
+                              Flexible(
+                                flex: 3,
+                                child: Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Hero(tag: 'experience', child: Text(
+                                              '經歷',
+                                              style: Theme.of(context).textTheme.subtitle2,
+                                            ))
+                                          ),
+                                          Flexible(child: experienceTimeline),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(fit: FlexFit.tight, child: Column(
                                       children: <Widget>[
                                         Align(
                                           alignment: Alignment.topCenter,
-                                          child: Hero(tag: 'experience', child: Text(
-                                            '經歷',
-                                            style: Theme.of(context).textTheme.subtitle2,
-                                          ))
+                                          child: Text('技能', style: Theme.of(context).textTheme.subtitle2,)
                                         ),
-                                        experienceTimeline,
-                                      ],
-                                    ),
-                                  ),
-                                  Flexible(fit: FlexFit.tight, child: Column(
-                                    children: <Widget>[
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text('技能', style: Theme.of(context).textTheme.subtitle2,)
-                                      ),
-                                      Flexible(
-                                        child: ListView.builder(
-                                          itemCount: skills.length,
-                                          itemBuilder: (_, index) => ListTile(
-                                            dense: true,
-                                            leading: Hero(tag: 'skill_${skills[index].name}_icon', child: Icon(skills[index].icon)),
-                                            title: Align(
-                                              alignment: Alignment(-1.2, 0),
-                                              child: Padding(
-                                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                                child: Hero(
-                                                  tag: 'skill_${skills[index].name}_name',
-                                                  child: Text(
-                                                    skills[index].name,
-                                                    style: Theme.of(context).textTheme.caption.apply(
-                                                      color: Theme.of(context).primaryColor
-                                                    )
+                                        Flexible(
+                                          child: ListView.builder(
+                                            itemCount: skills.length,
+                                            itemBuilder: (_, index) => ListTile(
+                                              dense: true,
+                                              leading: Hero(tag: 'skill_${skills[index].name}_icon', child: Icon(skills[index].icon)),
+                                              title: Align(
+                                                alignment: Alignment(-1.2, 0),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                                  child: Hero(
+                                                    tag: 'skill_${skills[index].name}_name',
+                                                    child: Text(
+                                                      skills[index].name,
+                                                      style: Theme.of(context).textTheme.caption.apply(
+                                                        color: Theme.of(context).primaryColor
+                                                      )
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            subtitle: Align(
-                                              alignment: Alignment(-1.2, 0),
-                                              child: Hero(
-                                                tag: 'skill_${skills[index].name}_description', 
-                                                child: getDescriptionWidget(
-                                                  context, 
-                                                  skills[index].description, 
-                                                  Theme.of(context).textTheme.overline.apply(
-                                                    fontSizeFactor: ResponsiveHelper().valueGiver(context, 0.8, 1, 1, 1, 1)
+                                              subtitle: Align(
+                                                alignment: Alignment(-1.2, 0),
+                                                child: Hero(
+                                                  tag: 'skill_${skills[index].name}_description', 
+                                                  child: getDescriptionWidget(
+                                                    context, 
+                                                    skills[index].description, 
+                                                    Theme.of(context).textTheme.overline.apply(
+                                                      fontSizeFactor: ResponsiveHelper().valueGiver(context, 0.8, 1, 1, 1, 1)
+                                                    )
                                                   )
-                                                )
+                                                ),
                                               ),
-                                            ),
-                                          )
+                                            )
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ))
-                                ]
+                                      ],
+                                    ))
+                                  ]
+                                )
                               )
-                            )
-                          ],
-                        ),
-                        Align(alignment: Alignment.bottomCenter , child: Text(
-                          '1',
-                          style: Theme.of(context).textTheme.caption,
-                        ))
-                      ],
+                            ],
+                          ),
+                          Align(alignment: Alignment.bottomCenter , child: Text(
+                            '1',
+                            style: Theme.of(context).textTheme.caption,
+                          ))
+                        ],
+                      ),
                     ),
                   )
                 ),

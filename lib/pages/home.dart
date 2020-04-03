@@ -1,5 +1,7 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:personal_website/components/SocialBar.dart';
 import 'package:personal_website/components/bulletList.dart';
 import 'package:personal_website/components/skillCard.dart';
@@ -8,6 +10,9 @@ import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/event.dart';
 import 'package:personal_website/models/skill.dart';
 import 'package:personal_website/responsive.dart';
+import 'package:personal_website/routes/route_handlers.dart';
+import 'package:personal_website/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -26,6 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final routesNotifier = Provider.of<Routes>(context);
     controller = PageController(
       initialPage: 0,
       keepPage: true
@@ -83,6 +89,12 @@ class _HomePageState extends State<HomePage> {
           // style: Theme.of(context).textTheme.headline6,
         ),
         actions: <Widget>[
+          IconButton(icon: Icon(FontAwesomeIcons.userCircle), onPressed: () => routesNotifier.router.navigateTo(
+            context, '/resume',
+            transition: TransitionType.custom,
+            transitionDuration: Duration(milliseconds: 800),
+            transitionBuilder: route_handlers.firstWhere((route_handler) => route_handler.path == '/resume').transitionBuilder
+          )),
           Hero(tag: 'socialLinks', child: new SocialBar())
         ],
       ),

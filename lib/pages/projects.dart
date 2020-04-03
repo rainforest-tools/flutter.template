@@ -317,7 +317,7 @@ class _ProjectsPageState extends State<ProjectsPage> with TickerProviderStateMix
             crossAxisCount: ResponsiveHelper().valueGiver<int>(context, 1, 1, 2, 3, 5),
             mainAxisSpacing: 30,
             crossAxisSpacing: 30,
-            childAspectRatio: 1 / 1.4
+            childAspectRatio: 1 / ResponsiveHelper().valueGiver(context, 1.5, 1.5, 1.4, 1.4, 1.4)
           ), 
           itemCount: tagsNotifier.filtedProjects.length,
           itemBuilder: (_, index) => GestureDetector(
