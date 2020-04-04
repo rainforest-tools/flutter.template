@@ -10,8 +10,10 @@ import 'package:personal_website/components/skillCard.dart';
 import 'package:personal_website/components/timeline.dart';
 import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/event.dart';
+import 'package:personal_website/models/settings.dart';
 import 'package:personal_website/models/skill.dart';
 import 'package:personal_website/responsive.dart';
+import 'package:provider/provider.dart';
 
 class TranditionalResume extends StatefulWidget {
   TranditionalResume({Key key}) : super(key: key);
@@ -22,6 +24,13 @@ class TranditionalResume extends StatefulWidget {
 
 class _TranditionalResumeState extends State<TranditionalResume> {
   GlobalKey globalKey = GlobalKey();
+  bool _isDragging;
+
+  @override
+  void initState() {
+    super.initState();
+    _isDragging = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +96,14 @@ class _TranditionalResumeState extends State<TranditionalResume> {
         fontSizeFactor: ResponsiveHelper().valueGiver(context, 0.8, 1, 1, 1, 1)
       ),
     );
+    
     return DefaultLayout(
       appBar: AppBar(
         title: Text(
           'Rainforest',
         ),
         actions: <Widget>[
-          // Hero(tag: 'socialLinks', child: new SocialBar())
+          _createDraggable(SocialBarPosition.APPBAR, context)
         ],
       ),
       body: Stack(
@@ -221,17 +231,112 @@ class _TranditionalResumeState extends State<TranditionalResume> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true,)),
-            )
-          ),
+          ...alignments.map((e) => mapSocialBarPositionWithAlignment(e)).map((e) => _createDraggable(e, context)).where((c) => c != null).toList()
         ],
       ),
     );
   }
+
+  final alignments = [
+    Alignment.bottomLeft, Alignment.bottomCenter, Alignment.bottomRight,
+    Alignment.centerLeft, Alignment.center, Alignment.centerRight,
+    Alignment.topLeft, Alignment.topCenter, Alignment.topRight,
+  ];
+
+  Widget _createDraggable(SocialBarPosition position, BuildContext context) {
+    final settingsNotifier = Provider.of<SettingsNotifier>(context);
+    final alignment = alignments.firstWhere(
+      (element) => position.toString().split('.').last.toLowerCase() == element.toString().toLowerCase(),
+      orElse: () {},
+    );
+    if (alignment == null) {
+      switch (position) {
+        case SocialBarPosition.APPBAR:
+          return settingsNotifier.settings.socialBarPosition == position ? Draggable(
+            data: position,
+            feedback: Hero(tag: 'socialLinks', child: new SocialBar()),
+            childWhenDragging: _createPlaceHolder(context, Theme.of(context).primaryColor),
+            child: Hero(tag: 'socialLinks', child: new SocialBar()),
+            onDragStarted: () => setState(() {
+              _isDragging = true;
+            }),
+            onDragEnd: (details) => setState(() {
+              _isDragging = false;
+            }),
+            onDraggableCanceled: (velocity, offset) => setState(() {
+              _isDragging = false;
+            }),
+            onDragCompleted: () => setState(() {
+              _isDragging = false;
+            }),
+          ) : _createDragTarget(context, position);
+        default:
+          break;
+      }
+    }
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Align(
+        alignment: alignment,
+        child: settingsNotifier.settings.socialBarPosition == position ? Draggable(
+          data: position,
+          feedback: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true, isCollapsed: true,)),
+          childWhenDragging: _createPlaceHolder(context, Theme.of(context).primaryColor),
+          child: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true,)),
+          onDragStarted: () => setState(() {
+            _isDragging = true;
+          }),
+          onDragEnd: (details) => setState(() {
+            _isDragging = false;
+          }),
+          onDraggableCanceled: (velocity, offset) => setState(() {
+            _isDragging = false;
+          }),
+          onDragCompleted: () => setState(() {
+            _isDragging = false;
+          }),
+        ) : _createDragTarget(context, position)
+      ),
+    );
+  }
+
+  Widget _createDragTarget (BuildContext context, SocialBarPosition position) {
+    final settingsNotifier = Provider.of<SettingsNotifier>(context);
+    return DragTarget<SocialBarPosition>(
+      onWillAccept: (data) => true,
+      onAccept: (data) {
+        settingsNotifier.setSettings(SettingsEnum.socialBarPosition, position);
+      },
+      builder: (context, candidateData, rejectedData) {
+        if (_isDragging) return _createPlaceHolder(context, Theme.of(context).accentColor);
+      },
+    );
+  }
+
+  Widget _createPlaceHolder (BuildContext context, Color color) => Container(
+    width: 56,
+    height: 56,
+    decoration: new BoxDecoration(
+      color: Colors.transparent,
+      boxShadow: [
+        BoxShadow(
+          color: color,
+          offset: const Offset(0.0, 0.0),
+        ),
+        BoxShadow(
+          color: Theme.of(context).backgroundColor,
+          offset: const Offset(0.0, 0.0),
+          spreadRadius: -12.0,
+          blurRadius: 12.0,
+        ),
+      ],
+      border: Border.all(
+        width: 1,
+        style: BorderStyle.solid,
+        color: color
+      )
+    ),
+  );
 
   Future<void> _capturePng() async {
     RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();

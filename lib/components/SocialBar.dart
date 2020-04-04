@@ -25,15 +25,17 @@ class SocialBar extends StatefulWidget {
 class _SocialBarState extends State<SocialBar> {
   bool _isCollapsed;
   bool _isReversed;
+  bool _isMiddle;
   Widget _floatingButton;
   List<Widget> _buttons;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _handlePositionUpdate());
+    WidgetsBinding.instance..addPostFrameCallback((_) => _handlePositionUpdate());
     super.initState();
     _isCollapsed = widget.isCollapsed;
     _isReversed = false;
+    _isMiddle = false;
   }
 
   Widget animatedContainer (Widget child, bool value) => AnimatedOpacity(
@@ -109,7 +111,6 @@ class _SocialBarState extends State<SocialBar> {
         ),
       ),
     ];
-    if (widget.isCollapsable) _buttons.insert(0, _floatingButton);
     
     return Material(
       borderRadius: BorderRadius.circular(28),
@@ -125,6 +126,14 @@ class _SocialBarState extends State<SocialBar> {
 
   List<Widget> _getChildren() {
     if (!widget.isCollapsable) return _buttons;
+    if (_isMiddle) {
+      _buttons.insert(
+        _buttons.length.isOdd ? (_buttons.length / 2).floor() : (_buttons.length / 2).floor(), 
+        _floatingButton
+      );
+      return _buttons;
+    } 
+    _buttons.insert(0, _floatingButton);
     return _isReversed ? _buttons.reversed.toList() : _buttons;
   }
 
@@ -134,14 +143,21 @@ class _SocialBarState extends State<SocialBar> {
       final offset = renderBox.localToGlobal(Offset.zero);
       final globalSize = MediaQuery.of(context).size;
       
-      if (widget.direction == Axis.horizontal)
-        if (offset.dx > globalSize.width / 2) setState(() {
+      if (widget.direction == Axis.horizontal) {
+        if (offset.dx > globalSize.width / 2 + globalSize.width * 0.1) setState(() {
           _isReversed = true;
+          _isMiddle = false;
+        }); else if (offset.dx < globalSize.width / 2 - globalSize.width * 0.1) setState(() {
+          _isReversed = false;
+          _isMiddle = false;
+        }); else setState(() {
+          _isMiddle = true;
         });
-      else
+      } else {
         if (offset.dy > globalSize.height / 2) setState(() {
           _isReversed = true;
         });
+      }
     } catch (error) {
       print(error);
     }

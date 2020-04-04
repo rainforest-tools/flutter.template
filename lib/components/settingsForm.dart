@@ -54,8 +54,20 @@ class _SettingsFormState extends State<SettingsForm> {
                   child: Text(e.toString().split('.').last.toLowerCase())
                 )).toList(), 
                 onChanged: (value) {
-                  print(value);
                   settingsNotifier.setSettings(SettingsEnum.layout, value);
+                }
+              ),
+              DropdownButtonFormField(
+                value: settingsNotifier.settings.socialBarPosition,
+                decoration: InputDecoration(
+                  labelText: '聯絡資訊欄位置'
+                ),
+                items: SocialBarPosition.values.map((e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.toString().split('.').last.toLowerCase())
+                )).toList(), 
+                onChanged: (value) {
+                  settingsNotifier.setSettings(SettingsEnum.socialBarPosition, value);
                 }
               )
             ]
