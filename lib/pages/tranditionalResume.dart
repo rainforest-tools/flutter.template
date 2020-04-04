@@ -73,7 +73,7 @@ class _TranditionalResumeState extends State<TranditionalResume> {
             textStyle: Theme.of(context).textTheme.overline,
           ),
         ),
-        Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,)),
+        // Hero(tag: 'socialLinks', child: new SocialBar(iconSize: 15,)),
       ],
     );
     final experienceTimeline = new Timeline(
@@ -102,7 +102,7 @@ class _TranditionalResumeState extends State<TranditionalResume> {
           child: RepaintBoundary(
             key: globalKey,
             child: Transform.scale(
-              scale: ResponsiveHelper().valueGiver(context, 0.7, 0.8, 1, 1, 1),
+              scale: ResponsiveHelper().valueGiver(context, 1, 1, 1, 1, 1),
               child: AspectRatio(
                 aspectRatio: 210 / 297,
                 child: Card(
@@ -111,6 +111,10 @@ class _TranditionalResumeState extends State<TranditionalResume> {
                     child: Scaffold(
                       body: Stack(
                         children: <Widget>[
+                          Align(alignment: Alignment.bottomCenter , child: Text(
+                            '1',
+                            style: Theme.of(context).textTheme.caption,
+                          )),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -203,10 +207,10 @@ class _TranditionalResumeState extends State<TranditionalResume> {
                               )
                             ],
                           ),
-                          Align(alignment: Alignment.bottomCenter , child: Text(
-                            '1',
-                            style: Theme.of(context).textTheme.caption,
-                          ))
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true,))
+                          ),
                         ],
                       ),
                     ),

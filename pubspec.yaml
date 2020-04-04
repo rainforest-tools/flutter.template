@@ -32,6 +32,7 @@ dependencies:
   provider: ^4.0.4
   intl: ^0.16.1
   url_launcher: ^5.0.3
+  vector_math: ^2.0.8
   # Router for flutter
   fluro: ^1.6.2
   # RWD

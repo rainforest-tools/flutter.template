@@ -98,13 +98,15 @@ class _HomePageState extends State<HomePage> {
           // style: Theme.of(context).textTheme.headline6,
         ),
         actions: <Widget>[
-          IconButton(icon: Icon(FontAwesomeIcons.userCircle), onPressed: () => routesNotifier.router.navigateTo(
-            context, '/resume',
-            transition: TransitionType.custom,
-            transitionDuration: Duration(milliseconds: 800),
-            transitionBuilder: route_handlers.firstWhere((route_handler) => route_handler.path == '/resume').transitionBuilder
-          )),
-          Hero(tag: 'socialLinks', child: new SocialBar())
+          Flexible(
+            child: IconButton(icon: Icon(FontAwesomeIcons.userCircle), onPressed: () => routesNotifier.router.navigateTo(
+              context, '/resume',
+              transition: TransitionType.custom,
+              transitionDuration: Duration(milliseconds: 800),
+              transitionBuilder: route_handlers.firstWhere((route_handler) => route_handler.path == '/resume').transitionBuilder
+            )),
+          ),
+          Flexible(child: Hero(tag: 'socialLinks', child: new SocialBar()))
         ],
       ),
       body: Padding(
