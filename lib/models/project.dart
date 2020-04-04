@@ -77,6 +77,7 @@ final projects = <Project>[
     ],
     name: 'BIM 管理平台',
     description: '整合 BIM(Building Information Modeling) 資訊及工程各階段文檔、數據，並進一步視覺化。',
+    imageUrl: 'assets/images/projects/BIM 管理平台.png',
     tags: [
       tags['REACT'],
       tags['FRONTEND']
