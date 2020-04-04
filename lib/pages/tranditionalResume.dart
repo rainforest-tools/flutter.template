@@ -282,7 +282,7 @@ class _TranditionalResumeState extends State<TranditionalResume> {
           data: position,
           feedback: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true, isCollapsed: true,)),
           childWhenDragging: _createPlaceHolder(context, Theme.of(context).primaryColor),
-          child: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true,)),
+          child: Hero(tag: 'socialLinks', child: new SocialBar(isCollapsable: true, isCollapsed: true,)),
           onDragStarted: () => setState(() {
             _isDragging = true;
           }),

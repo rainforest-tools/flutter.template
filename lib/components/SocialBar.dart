@@ -142,7 +142,6 @@ class _SocialBarState extends State<SocialBar> {
       final RenderBox renderBox = context.findRenderObject();
       final offset = renderBox.localToGlobal(Offset.zero);
       final globalSize = MediaQuery.of(context).size;
-      
       if (widget.direction == Axis.horizontal) {
         if (offset.dx > globalSize.width / 2 + globalSize.width * 0.1) setState(() {
           _isReversed = true;
