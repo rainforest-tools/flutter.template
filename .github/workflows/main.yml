@@ -1,0 +1,37 @@
+
+name: Flutter Web
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build Web
+    env:
+      my_secret: ${{secrets.commit_secret}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+      - run: flutter config --enable-web
+      - run: flutter pub get
+      - run: flutter build web --release
+      - run: |
+          cd build/web
+          
+          touch CNAME
+          echo "rainforest.tools" > CNAME
+          
+          git init
+          git config --global user.email r08521610@ntu.edu.tw
+          git config --global user.name r08521610
+          git status
+          git remote add origin https://${{secrets.commit_secret}}@github.com/r08521610/personal_website.git
+          
+          git checkout -b gh-pages
+          git add --all
+          timestamp="`date +'%Y-%m-%dT%T.%3N%z'`"
+          git commit -m "deploy @ $timestamp"
+          git push origin gh-pages -f
