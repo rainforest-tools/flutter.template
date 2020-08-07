@@ -6,23 +6,24 @@ import 'package:provider/provider.dart';
 import 'themes.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ThemeNotifier>(
-          create: (_) => ThemeNotifier(darkTheme),
-        ),
-        ChangeNotifierProvider<Routes>(create: (_) {
-          final routesNotifier = Routes();
-          routesNotifier.configure();
-          return routesNotifier;
-        }),
-        ChangeNotifierProvider<SettingsNotifier>(create: (_) => SettingsNotifier()),
-        ChangeNotifierProvider<TagsNotifier>(create: (_) => TagsNotifier(),)
-      ],
-      child: MyApp(),
-    )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<ThemeNotifier>(
+        create: (_) => ThemeNotifier(darkTheme),
+      ),
+      ChangeNotifierProvider<Routes>(create: (_) {
+        final routesNotifier = Routes();
+        routesNotifier.configure();
+        return routesNotifier;
+      }),
+      ChangeNotifierProvider<SettingsNotifier>(
+          create: (_) => SettingsNotifier()),
+      ChangeNotifierProvider<TagsNotifier>(
+        create: (_) => TagsNotifier(),
+      )
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
       title: 'Rainforest',
       debugShowCheckedModeBanner: false,
       theme: themeNotifier.getTheme(),
-      onGenerateRoute: (routeSettings) => routesNotifier.router.generator(context, routeSettings),
+      onGenerateRoute: (routeSettings) =>
+          routesNotifier.router.generator(routeSettings),
     );
   }
 }
