@@ -33,36 +33,37 @@ class DefaultLayout extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: route_handlers.length,
                       itemBuilder: (_, int index) {
-                        return ListTile(
-                          title: new Text(
-                            route_handlers[index].title,
-                            style: Theme.of(context).textTheme.subtitle1.apply(
-                              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(255)
+                        if (route_handlers[index].showOnDrawer)
+                          return ListTile(
+                            title: new Text(
+                              route_handlers[index].title,
+                              style: Theme.of(context).textTheme.subtitle1.apply(
+                                color: Theme.of(context).textTheme.subtitle1.color.withAlpha(255)
+                              ),
                             ),
-                          ),
-                          onTap: () {
-                            Navigator.popUntil(context, (route) {
-                              if (route.settings.name != route_handlers[index].path) {
-                                // Navigator.pushNamed(context, route_handlers[index].path);
-                                if (route_handlers[index].transitionType == TransitionType.custom) {
-                                  routesNotifier.router.navigateTo(
-                                    context, 
-                                    route_handlers[index].path,
-                                    transition: TransitionType.custom,
-                                    transitionDuration: Duration(milliseconds: 800),
-                                    transitionBuilder: route_handlers[index].transitionBuilder
-                                  );
-                                } else {
-                                  routesNotifier.router.navigateTo(
-                                    context, 
-                                    route_handlers[index].path,
-                                  );
-                                };
-                              }
-                              return true;
-                            });
-                          }
-                        );
+                            onTap: () {
+                              Navigator.popUntil(context, (route) {
+                                if (route.settings.name != route_handlers[index].path) {
+                                  // Navigator.pushNamed(context, route_handlers[index].path);
+                                  if (route_handlers[index].transitionType == TransitionType.custom) {
+                                    routesNotifier.router.navigateTo(
+                                      context, 
+                                      route_handlers[index].path,
+                                      transition: TransitionType.custom,
+                                      transitionDuration: Duration(milliseconds: 800),
+                                      transitionBuilder: route_handlers[index].transitionBuilder
+                                    );
+                                  } else {
+                                    routesNotifier.router.navigateTo(
+                                      context, 
+                                      route_handlers[index].path,
+                                    );
+                                  };
+                                }
+                                return true;
+                              });
+                            }
+                          );
                       }
                     )
                   ),

@@ -31,9 +31,10 @@ dependencies:
 
   provider: ^4.0.4
   intl: ^0.16.1
-  url_launcher: ^5.4.2
+  url_launcher: ^5.0.3
+  vector_math: ^2.0.8
   # Router for flutter
-  fluro: ^1.6.1
+  fluro: ^1.6.2
   # RWD
   
 
@@ -62,6 +63,7 @@ flutter:
     - assets/images/projects/Cards Carousel.png
     - assets/images/projects/Color Editor.png
     - assets/images/projects/TSA Handbook.png
+    - assets/images/projects/BIM 管理平台.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

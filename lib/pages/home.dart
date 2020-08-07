@@ -1,5 +1,8 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:personal_website/components/SocialBar.dart';
 import 'package:personal_website/components/bulletList.dart';
 import 'package:personal_website/components/skillCard.dart';
 import 'package:personal_website/components/timeline.dart';
@@ -7,6 +10,9 @@ import 'package:personal_website/layouts/default.dart';
 import 'package:personal_website/models/event.dart';
 import 'package:personal_website/models/skill.dart';
 import 'package:personal_website/responsive.dart';
+import 'package:personal_website/routes/route_handlers.dart';
+import 'package:personal_website/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -25,6 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final routesNotifier = Provider.of<Routes>(context);
     controller = PageController(
       initialPage: 0,
       keepPage: true
@@ -38,34 +45,50 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       children: <Widget>[
-        Text(
-          '鄭羽霖', 
-          style: Theme.of(context).textTheme.headline2.apply(
-            color: Theme.of(context).primaryColor,
-          )
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+        Hero(
+          tag: 'profile_name',
           child: Text(
-            '研究生＠台大土木電腦輔助工程組\nSpecialize in ML/DL, Frontend',
-            style: Theme.of(context).textTheme.subtitle1.apply(
-              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(150)
+            '鄭羽霖', 
+            style: Theme.of(context).textTheme.headline2.apply(
+              color: Theme.of(context).primaryColor,
             )
           ),
         ),
-        BulletList(
-          texts: [
-            '熱衷學習、使用各種前端框架開發',
-            '注重良好 UI/UX',
-            '質感、美感偏執，希望能參與各種酷炫視覺效果之應用開發'
-          ],
-          textStyle: Theme.of(context).textTheme.headline6,
+        Hero(
+          tag: 'profile_job_title',
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              '研究生＠台大土木電腦輔助工程組\nSpecialize in ML/DL, Frontend',
+              style: Theme.of(context).textTheme.subtitle1.apply(
+                color: Theme.of(context).textTheme.subtitle1.color.withAlpha(150)
+              )
+            ),
+          ),
+        ),
+        Hero(
+          tag: 'profile_description',
+          child: BulletList(
+            texts: [
+              '熱衷學習、使用各種前端框架開發',
+              '注重良好 UI/UX',
+              '質感、美感偏執，希望能參與各種酷炫視覺效果之應用開發'
+            ],
+            textStyle: Theme.of(context).textTheme.headline6,
+          ),
         )
       ],
     );
-    final profileImage = Image(
-      image: AssetImage('assets/images/profile.JPG'),
-      fit: BoxFit.cover,
+    
+    final profileImage = Hero(
+      tag: 'profileImage',
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(300),
+        child: Image(
+          image: AssetImage('assets/images/profile.JPG'),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
 
     return DefaultLayout(
@@ -74,6 +97,17 @@ class _HomePageState extends State<HomePage> {
           'Rainforest',
           // style: Theme.of(context).textTheme.headline6,
         ),
+        actions: <Widget>[
+          Flexible(
+            child: IconButton(icon: Icon(FontAwesomeIcons.userCircle), onPressed: () => routesNotifier.router.navigateTo(
+              context, '/resume',
+              transition: TransitionType.custom,
+              transitionDuration: Duration(milliseconds: 800),
+              transitionBuilder: route_handlers.firstWhere((route_handler) => route_handler.path == '/resume').transitionBuilder
+            )),
+          ),
+          Flexible(child: Hero(tag: 'socialLinks', child: new SocialBar()))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
@@ -102,10 +136,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Flexible(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(300),
-                      child: profileImage
-                    ),
+                    child: profileImage
                   ),
                   Flexible(
                     child: Transform.translate(
@@ -122,9 +153,12 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Flexible(
                   flex: 2,
-                  child: Text(
-                    '經歷', 
-                    style: Theme.of(context).textTheme.headline3
+                  child: Hero(
+                    tag: 'experience',
+                    child: Text(
+                      '經歷', 
+                      style: Theme.of(context).textTheme.headline3
+                    ),
                   )
                 ),
                 Flexible(child: FractionallySizedBox(heightFactor: 0.2,)),
@@ -133,6 +167,11 @@ class _HomePageState extends State<HomePage> {
                   child: new Timeline(
                     events: events,
                     controller: horizontalScrollController,
+                    timestampStyle: Theme.of(context).textTheme.subtitle2,
+                    nameStyle: Theme.of(context).textTheme.headline6.apply(
+                      color: Theme.of(context).primaryColor
+                    ),
+                    descriptionStyle: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
               ],
@@ -156,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                 child: GridView.builder(
                   controller: verticalScrollController,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: ResponsiveHelper().columns(context, 1, 1, 3, 4, 5),
+                    crossAxisCount: ResponsiveHelper().valueGiver<int>(context, 1, 1, 3, 4, 5),
                     mainAxisSpacing: 30,
                     crossAxisSpacing: 30,
                   ),

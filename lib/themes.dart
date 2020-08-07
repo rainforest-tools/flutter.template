@@ -22,7 +22,10 @@ final darkTheme = ThemeData(
       color: Colors.white
     )
   ),
-  colorScheme: darkColorScheme
+  colorScheme: darkColorScheme,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.tealAccent[100],
+  )
 );
 
 final darkColorScheme = ColorScheme.dark(
@@ -30,14 +33,14 @@ final darkColorScheme = ColorScheme.dark(
   primaryVariant: Colors.tealAccent[700],
   secondary: Colors.indigo[100],
   secondaryVariant: Colors.indigo[400],
-  surface: Colors.black87,
-  background: Colors.black87,
+  surface: Colors.black54,
+  background: Colors.black54,
   error: Colors.red[200],
-  onPrimary: Colors.black87,
-  onSecondary: Colors.black87,
+  onPrimary: Colors.black54,
+  onSecondary: Colors.black54,
   onSurface: Colors.white70,
   onBackground: Colors.white70,
-  onError: Colors.black87
+  onError: Colors.black54
 );
 
 final lightTheme = ThemeData(
@@ -60,7 +63,26 @@ final lightTheme = ThemeData(
     iconTheme: IconThemeData(
       color: Colors.black
     )
+  ),
+  colorScheme: lightColorScheme,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.teal
   )
+);
+
+final lightColorScheme = ColorScheme.dark(
+  primary: Colors.tealAccent[100],
+  primaryVariant: Colors.tealAccent[700],
+  secondary: Colors.indigo[100],
+  secondaryVariant: Colors.indigo[400],
+  surface: Colors.white70,
+  background: Colors.white70,
+  error: Colors.red[200],
+  onPrimary: Colors.white70,
+  onSecondary: Colors.white70,
+  onSurface: Colors.black87,
+  onBackground: Colors.black87,
+  onError: Colors.white70
 );
 
 class ThemeNotifier with ChangeNotifier {
@@ -87,6 +109,11 @@ final textTheme = TextTheme(
     fontSize: 49,
     letterSpacing: 0
   ),
+  headline4: GoogleFonts.notoSerif(
+    fontWeight: FontWeight.normal,
+    fontSize: 34,
+    letterSpacing: 0.25
+  ),
   headline6: GoogleFonts.notoSerif(
     fontWeight: FontWeight.w500,
     fontSize: 21,
@@ -101,5 +128,20 @@ final textTheme = TextTheme(
     fontWeight: FontWeight.w500,
     fontSize: 14,
     letterSpacing: 0.1,
+  ),
+  bodyText1: GoogleFonts.roboto(
+    fontWeight: FontWeight.normal,
+    fontSize: 16,
+    letterSpacing: 0.5
+  ),
+  caption: GoogleFonts.notoSerif(
+    fontWeight: FontWeight.normal,
+    fontSize: 10,
+    letterSpacing: 0.4
+  ),
+  overline: GoogleFonts.roboto(
+    fontWeight: FontWeight.normal,
+    fontSize: 8,
+    letterSpacing: 1.5
   )
 );

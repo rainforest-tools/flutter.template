@@ -43,6 +43,32 @@ class _SettingsFormState extends State<SettingsForm> {
                   settingsNotifier.setSettings(SettingsEnum.isDarkMode, value);
                   settingsNotifier.settings.isDarkMode ? themeNotifier.setTheme(darkTheme) : themeNotifier.setTheme(lightTheme);
                 }
+              ),
+              DropdownButtonFormField(
+                value: settingsNotifier.settings.layout,
+                decoration: InputDecoration(
+                  labelText: 'Layout'
+                ),
+                items: Layout.values.map((e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.toString().split('.').last.toLowerCase())
+                )).toList(), 
+                onChanged: (value) {
+                  settingsNotifier.setSettings(SettingsEnum.layout, value);
+                }
+              ),
+              DropdownButtonFormField(
+                value: settingsNotifier.settings.socialBarPosition,
+                decoration: InputDecoration(
+                  labelText: '聯絡資訊欄位置'
+                ),
+                items: SocialBarPosition.values.map((e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.toString().split('.').last.toLowerCase())
+                )).toList(), 
+                onChanged: (value) {
+                  settingsNotifier.setSettings(SettingsEnum.socialBarPosition, value);
+                }
               )
             ]
           ),

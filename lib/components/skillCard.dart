@@ -18,42 +18,47 @@ class SkillCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Icon(
-            skill.icon,
-            size: 50,
+          Hero(
+            tag: 'skill_${skill.name}_icon',
+            child: Icon(
+              skill.icon,
+              size: 50,
+            ),
           ),
           ListTile(
             title: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                skill.name, 
-                style: Theme.of(context).textTheme.headline6.apply(
-                  color: Theme.of(context).primaryColor
-                )
+              child: Hero(
+                tag: 'skill_${skill.name}_name',
+                child: Text(
+                  skill.name, 
+                  style: Theme.of(context).textTheme.headline6.apply(
+                    color: Theme.of(context).primaryColor
+                  )
+                ),
               ),
             ),
-            subtitle: _getDescriptionWidget(context, skill.description),
+            subtitle: Hero(tag: 'skill_${skill.name}_description', child: getDescriptionWidget(context, skill.description, Theme.of(context).textTheme.bodyText1)),
           ),
         ],
       ),
     ),
   );
+}
 
-  Widget _getDescriptionWidget (BuildContext context, List<String> description) {
-    final textStyle = Theme.of(context).textTheme.bodyText1;
-    switch (description.length) {
-      case 0:
-        return Text('');
-      case 1:
-        return Text(
-          description.first,
-          style: textStyle
-        );
-      default:
-        return BulletList(
-          texts: description,
-          textStyle: textStyle,
-        );
-    }
+Widget getDescriptionWidget (BuildContext context, List<String> description, textStyle) {
+  switch (description.length) {
+    case 0:
+      return Text('');
+    case 1:
+      return Text(
+        description.first,
+        style: textStyle
+      );
+    default:
+      return BulletList(
+        texts: description,
+        textStyle: textStyle,
+      );
   }
 }

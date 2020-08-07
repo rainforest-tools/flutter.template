@@ -1,18 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_brand_icons/flutter_brand_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 final tags = {
-  'VUE': new Tag(name: 'Vue'),
-  'NUXT': new Tag(name: 'Nuxt'),
-  'REACT': new Tag(name: 'React'),
-  'NEXT': new Tag(name: 'Next'),
+  'VUE': new Tag(name: 'Vue', icon: FontAwesomeIcons.vuejs),
+  'NUXT': new Tag(name: 'Nuxt', icon: BrandIcons.nuxtDotJs),
+  'REACT': new Tag(name: 'React', icon: BrandIcons.react),
+  'NEXT': new Tag(name: 'Next', icon: BrandIcons.nextDotJs),
   'RWD': new Tag(name: 'RWD'),
   'FRONTEND': new Tag(name: 'Frontend'),
-  'FIREBASE': new Tag(name: 'Firebase'),
-  'MONGODB': new Tag(name: 'MongoDB'),
-  'GRAPHQL': new Tag(name: 'GraphQL'),
+  'FIREBASE': new Tag(name: 'Firebase', icon: BrandIcons.firebase),
+  'MONGODB': new Tag(name: 'MongoDB', icon: BrandIcons.mongodb),
+  'GRAPHQL': new Tag(name: 'GraphQL', icon: BrandIcons.graphql),
   'BACKEND': new Tag(name: 'Backend'),
 };
 
 final projects = <Project>[
   new FrontendProject(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2019, 12)
     ],
@@ -30,6 +35,7 @@ final projects = <Project>[
     ]
   ),
   new FrontendProject(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2019, 12)
     ],
@@ -45,6 +51,7 @@ final projects = <Project>[
     ]
   ),
   new Project(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2019, 5),
       new DateTime.utc(2019, 7),
@@ -63,18 +70,21 @@ final projects = <Project>[
     ]
   ),
   new Project(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2019, 9),
       new DateTime.utc(2019, 4),
     ],
     name: 'BIM 管理平台',
     description: '整合 BIM(Building Information Modeling) 資訊及工程各階段文檔、數據，並進一步視覺化。',
+    imageUrl: 'assets/images/projects/BIM 管理平台.png',
     tags: [
       tags['REACT'],
       tags['FRONTEND']
     ]
   ),
   new FrontendProject(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2019, 7),
     ],
@@ -89,6 +99,7 @@ final projects = <Project>[
     ]
   ),
   new CodepenProject(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2019, 2),
     ],
@@ -101,6 +112,7 @@ final projects = <Project>[
     ]
   ),
   new CodepenProject(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2018, 10),
     ],
@@ -109,11 +121,12 @@ final projects = <Project>[
     url: 'https://codepen.io/rainforest80256/pen/WajJax',
     imageUrl: 'assets/images/projects/Color Editor.png',
     tags: [
-      tags['Vue'],
+      tags['VUE'],
       tags['FRONTEND']
     ]
   ),
   new CodepenProject(
+    id: UniqueKey(),
     timestamp: [
       new DateTime.utc(2018, 8),
     ],
@@ -128,6 +141,7 @@ final projects = <Project>[
 ];
 
 class Project {
+  UniqueKey id;
   List<DateTime> timestamp;
   String name;
   String description;
@@ -135,21 +149,23 @@ class Project {
   String imageUrl;
   List<Tag> tags;
 
-  Project({this.timestamp, this.name, this.description = '', this.url, this.imageUrl, this.tags = const []});
+  Project({this.id, this.timestamp, this.name, this.description = '', this.url, this.imageUrl, this.tags = const []});
 }
 
 class FrontendProject extends Project {
   String deployUrl;
 
   FrontendProject({
+    UniqueKey id,
     List<DateTime> timestamp, 
     String name, 
     String description = '', 
     String url, 
     String imageUrl,
     this.deployUrl, 
-    List<Tag> tags = const []
+    List<Tag> tags = const [],
   }) : super(
+    id: id,
     timestamp: timestamp, 
     name: name, 
     description: description,
@@ -160,6 +176,7 @@ class FrontendProject extends Project {
 }
 class CodepenProject extends Project {
   CodepenProject({
+    UniqueKey id,
     List<DateTime> timestamp, 
     String name, 
     String description = '', 
@@ -167,6 +184,7 @@ class CodepenProject extends Project {
     String imageUrl,
     List<Tag> tags = const []
   }) : super(
+    id: id,
     timestamp: timestamp, 
     name: name, 
     description: description,
@@ -178,6 +196,43 @@ class CodepenProject extends Project {
 
 class Tag {
   String name;
+  bool isSelected;
+  IconData icon;
+  Tag({
+    this.name, 
+    this.isSelected = false,
+    this.icon
+  });
+}
 
-  Tag({this.name});
+class TagsNotifier extends ChangeNotifier {
+  List<Tag> _selectedTags = [];
+  List<Project> _filtedProjects = projects;
+
+  List<Tag> get selectedTags => _selectedTags;
+  List<Project> get filtedProjects => _filtedProjects;
+
+  void add(Tag tag) {
+    tag.isSelected = true;
+    _selectedTags.add(tag);
+    _setFiltedProjects();
+    notifyListeners();
+  }
+  void remove(Tag tag) {
+    tag.isSelected = false;
+    _selectedTags.remove(tag);
+    _setFiltedProjects();
+    notifyListeners();
+  }
+  void reset() {
+    _selectedTags.forEach((tag) => tag.isSelected = false);
+    _selectedTags.clear();
+    _filtedProjects = projects;
+    notifyListeners();
+  }
+
+  void _setFiltedProjects() {
+    _filtedProjects = _selectedTags.length == 0 ? projects :
+      projects.where((project) => project.tags.toSet().intersection(_selectedTags.toSet()).length == _selectedTags.length).toList();
+  }
 }

@@ -4,18 +4,13 @@ import 'package:personal_website/pages/empty.dart';
 import 'package:personal_website/routes/route_handlers.dart';
 
 void configureRoutes(Router router, List<RouteModel> routeHandlers) {
-  router.notFoundHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
-      print('Page Not Found!');
-      return EmptyPage();
-    }
-  );
   routeHandlers.forEach((routeHandler) {
     router.define(
-      routeHandler.path, 
+      routeHandler.path + routeHandler.queryRule, 
       handler: routeHandler.handler,
       transitionType: TransitionType.fadeIn
     );
+    if (routeHandler.routes != null) configureRoutes(router, routeHandler.routes);
   });
 }
 
@@ -25,6 +20,11 @@ class Routes extends ChangeNotifier {
   Router get router => _router;
 
   void configure() {
+    router.notFoundHandler = new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return EmptyPage();
+      }
+    );
     configureRoutes(_router, route_handlers);
 
     notifyListeners();
