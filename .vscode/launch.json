@@ -9,7 +9,7 @@
       "name": "Flutter",
       "request": "launch",
       "type": "dart",
-      "args": ["--web-port", "8686"]
+      "args": ["--web-port", "8686", "--cache-sksl"]
     }
   ]
 }

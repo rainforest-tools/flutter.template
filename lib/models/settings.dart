@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 
-enum SettingsEnum {
-  isDarkMode,
-  layout,
-  socialBarPosition
-}
-enum Layout {
-  DEFAULT,
-  RESUME
-}
+enum SettingsEnum { isDarkMode, layout, socialBarPosition }
+enum Layout { DEFAULT, RESUME }
 enum SocialBarPosition {
-  BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT,
-  CENTERLEFT, CENTER, CENTERRIGHT,
-  TOPLEFT, TOPCENTER, TOPRIGHT,
+  BOTTOMLEFT,
+  BOTTOMCENTER,
+  BOTTOMRIGHT,
+  CENTERLEFT,
+  CENTER,
+  CENTERRIGHT,
+  TOPLEFT,
+  TOPCENTER,
+  TOPRIGHT,
   APPBAR
 }
-SocialBarPosition mapSocialBarPositionWithAlignment (Alignment alignment) => 
-  SocialBarPosition.values.firstWhere((element) => element.toString().split('.').last.toLowerCase() == alignment.toString().toLowerCase());
+SocialBarPosition? mapSocialBarPositionWithAlignment(Alignment alignment) {
+  try {
+    return SocialBarPosition.values.firstWhere((element) =>
+        element.toString().split('.').last.toLowerCase() ==
+        alignment.toString().toLowerCase());
+  } on StateError {
+    return null;
+  }
+}
 
 class Settings {
   bool isDarkMode = true;
@@ -30,7 +36,7 @@ class SettingsNotifier extends ChangeNotifier {
   Settings get settings => _settings;
 
   void setSettings(SettingsEnum key, value) {
-    switch(key) {
+    switch (key) {
       case SettingsEnum.isDarkMode:
         _settings.isDarkMode = value;
         break;

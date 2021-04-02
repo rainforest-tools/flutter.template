@@ -4,12 +4,9 @@ import 'package:personal_website/themes.dart';
 import 'package:provider/provider.dart';
 
 class SettingsForm extends StatefulWidget {
-  const SettingsForm({
-    Key key,
-    this.backArrowAction
-  }) : super(key: key);
+  const SettingsForm({Key? key, this.backArrowAction}) : super(key: key);
 
-  final void Function() backArrowAction;
+  final void Function()? backArrowAction;
 
   @override
   _SettingsFormState createState() => _SettingsFormState();
@@ -24,54 +21,49 @@ class _SettingsFormState extends State<SettingsForm> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), 
-          onPressed: widget.backArrowAction
-        ),
-        title: const Text('Setting')
-      ),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back), onPressed: widget.backArrowAction),
+          title: const Text('Setting')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              SwitchListTile(
+          child: Column(children: [
+            SwitchListTile(
                 title: const Text('Dark Mode'),
-                value: settingsNotifier.settings.isDarkMode, 
+                value: settingsNotifier.settings.isDarkMode,
                 onChanged: (bool value) {
                   settingsNotifier.setSettings(SettingsEnum.isDarkMode, value);
-                  settingsNotifier.settings.isDarkMode ? themeNotifier.setTheme(darkTheme) : themeNotifier.setTheme(lightTheme);
-                }
-              ),
-              DropdownButtonFormField(
+                  settingsNotifier.settings.isDarkMode
+                      ? themeNotifier.setTheme(darkTheme)
+                      : themeNotifier.setTheme(lightTheme);
+                }),
+            DropdownButtonFormField(
                 value: settingsNotifier.settings.layout,
-                decoration: InputDecoration(
-                  labelText: 'Layout'
-                ),
-                items: Layout.values.map((e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e.toString().split('.').last.toLowerCase())
-                )).toList(), 
+                decoration: InputDecoration(labelText: 'Layout'),
+                items: Layout.values
+                    .map((e) => DropdownMenuItem(
+                        value: e,
+                        child:
+                            Text(e.toString().split('.').last.toLowerCase())))
+                    .toList(),
                 onChanged: (value) {
                   settingsNotifier.setSettings(SettingsEnum.layout, value);
-                }
-              ),
-              DropdownButtonFormField(
+                }),
+            DropdownButtonFormField(
                 value: settingsNotifier.settings.socialBarPosition,
-                decoration: InputDecoration(
-                  labelText: '聯絡資訊欄位置'
-                ),
-                items: SocialBarPosition.values.map((e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e.toString().split('.').last.toLowerCase())
-                )).toList(), 
+                decoration: InputDecoration(labelText: '聯絡資訊欄位置'),
+                items: SocialBarPosition.values
+                    .map((e) => DropdownMenuItem(
+                        value: e,
+                        child:
+                            Text(e.toString().split('.').last.toLowerCase())))
+                    .toList(),
                 onChanged: (value) {
-                  settingsNotifier.setSettings(SettingsEnum.socialBarPosition, value);
-                }
-              )
-            ]
-          ),
+                  settingsNotifier.setSettings(
+                      SettingsEnum.socialBarPosition, value);
+                })
+          ]),
         ),
       ),
     );
