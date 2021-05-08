@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Deploy Flutter to Firebase Hosting
 
 # Controls when the action will run. 
 on:
@@ -50,12 +50,11 @@ jobs:
         with:
           name: web-build
           path: web-build
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
+      - name: Deploy to Firebase Hosting
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting --public web-build
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: default
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PERSONAL_WEBSITE_CB8D3 }}'
+          projectId: personal-website-cb8d3
       
     
