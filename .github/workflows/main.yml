@@ -55,6 +55,7 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PERSONAL_WEBSITE_CB8D3 }}'
+          channelId: live
           projectId: personal-website-cb8d3
       
     
