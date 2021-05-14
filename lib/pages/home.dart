@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_website/i18n.dart';
 import 'package:personal_website/widgets/toggle.dart';
 
 class Home extends StatefulWidget {
@@ -27,7 +28,7 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  'Rainforest',
+                  S.of(context)!.name,
                   style: Theme.of(context).textTheme.headline2,
                 ),
               ),

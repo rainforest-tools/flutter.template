@@ -30,6 +30,11 @@ dependencies:
 
   adaptive_theme: ^2.2.0
 
+  # i18n
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -43,6 +48,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # i18n
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,5 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:personal_website/i18n.dart';
 import 'package:personal_website/pages/home.dart';
 
 void main() async {
@@ -26,11 +28,13 @@ class _MyAppState extends State<MyApp> {
         initial: widget.savedThemeMode ?? AdaptiveThemeMode.system,
         builder: (theme, darkTheme) {
           return MaterialApp(
-            title: 'Rainforest',
+            onGenerateTitle: (BuildContext context) => S.of(context)!.name,
             theme: theme,
             darkTheme: darkTheme,
             home: Home(),
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           );
         });
   }
