@@ -1,3 +1,5 @@
+:bangbang: | This project is deprecated, please use [rainforest-tools/flutter_template](https://github.com/rainforest-tools/flutter_template) instead
+:---: | :---
 # personal_website
 
 A new Flutter project.
